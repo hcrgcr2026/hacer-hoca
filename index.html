@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6854d5">
+  <meta name="description" content="Hacer Hoca'nın ücretsiz eğitim portalı. İlkokul 1, 2, 3 ve 4. sınıf için dersini ve konunu seç; eğlenceli etkinliklerle öğren.">
+  <title>Hacer Hoca | Öğrenme Atölyesi</title>
+  <style>
+    :root{color-scheme:light;--ink:#29244a;--muted:#77738c;--purple:#6854d5;--violet:#543fc4;--mint:#26a789;--line:#eae6f3;--white:#fff;--shadow:0 24px 65px rgba(44,31,95,.11);--rad:24px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#f7f6fc;font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;line-height:1.5;-webkit-tap-highlight-color:transparent}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #f5b54a;outline-offset:3px}button:disabled{cursor:not-allowed}svg{max-width:100%}[hidden]{display:none!important}h1,h2,h3,p{margin-top:0}h1,h2,h3{line-height:1.15}p{overflow-wrap:break-word}.wrap{width:min(100% - 40px,1110px);margin-inline:auto}
+    .ambient{position:absolute;pointer-events:none;inset:0;overflow:hidden;z-index:-1}.ambient::before,.ambient::after{content:'';position:absolute;filter:blur(12px);border-radius:50%}.ambient::before{width:430px;height:430px;top:-220px;left:-160px;background:#e9defd}.ambient::after{width:450px;height:450px;top:260px;right:-280px;background:#ddf7f0}
+    header.site-header{position:relative;background:#ffffffdd;backdrop-filter:blur(12px);border-bottom:1px solid #ebe7f3}.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:77px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:20px;letter-spacing:-.7px}.brand-mark{width:43px;height:43px;border-radius:15px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#8769ed,#5b4bc8);box-shadow:0 6px 14px #6854d52d;font-size:22px;transform:rotate(-5deg)}.brand small{display:block;font-size:10px;font-weight:750;color:#8c85a1;letter-spacing:.7px}.nav-right{display:flex;align-items:center;gap:22px}.nav-right a{font-size:13px;font-weight:800;color:#6b6481}.nav-right a:hover{color:var(--violet)}.header-pill{display:flex;align-items:center;gap:6px;padding:9px 13px;border-radius:999px;background:#e9faf4;color:#147e62;font-size:12px;font-weight:850}
+    .hero{position:relative;margin-top:28px;overflow:hidden;border-radius:31px;min-height:330px;color:#fff;background:linear-gradient(122deg,#7057de,#5442bf 70%,#4e3bb0);box-shadow:var(--shadow)}.hero::before{content:'';position:absolute;inset:auto -100px -240px auto;width:490px;height:490px;border:1px solid #ffffff30;border-radius:50%}.hero::after{content:'';position:absolute;width:220px;height:220px;border:1px solid #ffffff2b;border-radius:50%;left:-105px;top:-110px}.hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;min-height:330px;align-items:center;gap:18px;padding:28px 53px}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#ffffff24;border:1px solid #ffffff38;padding:9px 13px;border-radius:40px;font-size:12px;font-weight:850}.hero h1{font-size:clamp(32px,4.35vw,52px);letter-spacing:-1.65px;max-width:600px;margin:16px 0 13px}.hero h1 em{font-style:normal;color:#ffe5a7}.hero p{color:#eeeafe;max-width:500px;margin-bottom:23px;font-size:15px}.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:11px}.action{min-height:44px;border-radius:13px;padding:12px 18px;font-size:13px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:transform .2s,box-shadow .2s}.action:hover{transform:translateY(-2px)}.action.primary{background:#fff;color:#5747c0;box-shadow:0 8px 18px #35228036}.action.outline{background:#ffffff1a;border:1px solid #ffffff61;color:#fff}.hero-art{position:relative;align-self:end;justify-self:center;width:min(100%,340px);height:310px;display:grid;place-items:center}.art-ripple{position:absolute;width:270px;height:270px;background:#ffffff12;border:1px solid #ffffff3c;border-radius:50%;top:28px}.teacher-svg{width:255px;height:293px;filter:drop-shadow(0 16px 12px rgba(42,28,112,.28));animation:bob 4s ease-in-out infinite;position:relative;z-index:1}.float{position:absolute;font-size:27px;animation:bob 3.8s ease-in-out infinite}.float.a{left:4px;top:65px;animation-delay:.4s}.float.b{right:0;top:65px;animation-delay:1.3s}.float.c{right:16px;bottom:40px;animation-delay:2s}.float.d{left:20px;bottom:45px;animation-delay:.9s}@keyframes bob{50%{transform:translateY(-8px)}}
+    .hero-shapes{position:absolute;inset:0;pointer-events:none;overflow:hidden}.hero-shapes span{position:absolute;color:#fff6;font-weight:900}.hero-shapes span:nth-child(1){top:20px;left:55%;font-size:30px;transform:rotate(15deg)}.hero-shapes span:nth-child(2){bottom:15px;left:40%;font-size:26px;transform:rotate(-18deg)}
+    .summary{display:flex;gap:13px;margin:21px 0 33px;flex-wrap:wrap}.summary-item{display:flex;align-items:center;gap:11px;border:1px solid #eeeaf7;background:white;padding:12px 17px;border-radius:16px;box-shadow:0 4px 15px #29234408;min-width:170px;flex:1}.summary-icon{font-size:23px}.summary strong{display:block;font-weight:900;font-size:14px}.summary small{font-size:11px;color:var(--muted);font-weight:700}
+    .section-intro{margin:0 0 20px;display:flex;justify-content:space-between;gap:15px;align-items:end}.kicker{font-size:11px;font-weight:900;color:#6552cf;text-transform:uppercase;letter-spacing:1.5px}.section-intro h2{font-size:clamp(25px,3vw,34px);letter-spacing:-.8px;margin:8px 0 5px}.section-intro p{font-size:13px;color:var(--muted);margin:0}.tiny-hint{font-size:12px;color:#6d629b;font-weight:800;background:#f0edff;border:1px solid #e7e0ff;padding:8px 12px;border-radius:12px;flex:none}
+    .browser{display:grid;grid-template-columns:300px minmax(0,1fr);gap:22px;align-items:start}.side{border-radius:23px;background:white;border:1px solid #eeeaf7;padding:24px;box-shadow:0 9px 26px #3026530b}.fieldset-title{font-size:14px;font-weight:900;margin:0 0 13px;display:flex;align-items:center;gap:8px}.step-bubble{background:#eeeafa;color:#604cd0;font-size:11px;width:25px;height:25px;display:grid;place-items:center;border-radius:50%}.grade-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grade-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:97px;gap:3px;border-radius:16px;background:#faf9fd;border:2px solid #efecf6;color:#483e65;transition:.2s}.grade-btn:hover{border-color:#b7a9ff}.grade-btn[aria-pressed=true]{background:#f0ebff;border-color:#7861e2;color:#5d49c7;box-shadow:0 7px 13px #6753c71b}.grade-btn .grade-icon{font-size:24px}.grade-btn strong{font-weight:900;font-size:15px}.grade-btn small{font-size:10px;color:#817892;font-weight:750}.sidebar-divider{border:0;border-top:1px dashed #e4dff0;margin:22px 0}.subject-list{display:grid;gap:8px}.subject-btn{text-align:left;width:100%;display:flex;align-items:center;gap:11px;border-radius:13px;border:1.5px solid #edeaf4;background:white;padding:12px;font-size:13px;color:#605776;font-weight:820}.subject-btn:hover{border-color:#b0a2ec}.subject-btn[aria-pressed=true]{color:#5441c0;background:#f5f2ff;border-color:#bcaef5}.subject-btn .subject-icon{font-size:18px}.subject-btn span:last-child{flex:1}.subject-btn[aria-pressed=true]::after{content:'✓';font-size:15px;font-weight:900}
+    .catalog{min-width:0}.catalog-head{display:flex;justify-content:space-between;gap:14px;align-items:start;margin:0 0 14px}.catalog h3{margin:1px 0 5px;font-size:22px;letter-spacing:-.4px}.catalog-desc{font-size:12px;color:var(--muted);margin:0}.count-tag{flex:none;color:#6a56cf;background:#ece7ff;padding:7px 11px;border-radius:999px;font-size:11px;font-weight:850}.search-row{position:relative;margin-bottom:16px}.search-row input{height:46px;width:100%;border:1.5px solid #e6e2ef;border-radius:13px;padding:10px 15px 10px 42px;background:#fff;color:var(--ink)}.search-row input::placeholder{color:#9992a9}.search-row input:focus{border-color:#8571df;outline:3px solid #ddd4ff}.search-icon{pointer-events:none;position:absolute;left:15px;top:13px;color:#a299b8;width:19px;height:19px}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.course{display:flex;flex-direction:column;min-width:0;border:1px solid #eeeaf5;background:#fff;border-radius:20px;padding:18px;min-height:233px;box-shadow:0 8px 25px #3026530c;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}.course:hover{transform:translateY(-3px);box-shadow:0 14px 35px #30265317}.course::after{content:'';position:absolute;width:90px;height:90px;border-radius:50%;background:#f9f6ff;right:-40px;top:-36px}.course-top{display:flex;justify-content:space-between;align-items:start;gap:10px}.course-art{width:53px;height:53px;border-radius:17px;display:grid;place-items:center;font-size:25px;background:var(--tint,#f5eeff)}.course-state{font-weight:900;font-size:10px;padding:6px 9px;border-radius:99px;background:#f1f0f5;color:#847b94;white-space:nowrap;position:relative;z-index:1}.course-state.ready{background:#e4f8ec;color:#197b59}.course h4{font-size:17px;line-height:1.25;font-weight:900;margin:16px 0 7px;overflow-wrap:anywhere}.course p{font-size:12px;line-height:1.55;color:#77718b;margin-bottom:15px;flex:1}.course-bottom{display:flex;align-items:center;gap:9px;justify-content:space-between}.course-level{font-size:11px;color:#8a8398;font-weight:750}.course-link{display:inline-flex;align-items:center;gap:6px;border-radius:11px;background:linear-gradient(115deg,#7560df,#5744bd);color:#fff;padding:10px 12px;font-size:11px;font-weight:900;white-space:nowrap}.course-link:hover{box-shadow:0 4px 13px #6854d544}.course-link svg{width:13px;height:13px}.upcoming .course-art{filter:saturate(.7)}.course-coming{font-size:11px;color:#9b93aa;font-weight:850}
+    .empty{padding:45px 22px;text-align:center;background:#fff;border:1px dashed #e1dbee;border-radius:20px}.empty .emoji{font-size:35px}.empty h4{margin:7px 0;font-size:19px}.empty p{font-size:13px;color:var(--muted);margin:0}.tip{margin-top:17px;padding:14px 17px;border:1px solid #e7e1ff;border-radius:16px;background:#f4f0ff;color:#66588c;font-size:12px;line-height:1.55}.tip strong{color:#5b48b8}
+    .about{margin-top:54px;margin-bottom:40px}.about-head{text-align:center}.about-head h2{font-size:28px;letter-spacing:-.6px;margin:7px 0}.about-head p{color:var(--muted);font-size:13px}.about-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}.about-card{background:#fff;border:1px solid #eee9f6;border-radius:20px;padding:23px;text-align:center}.about-card .emoji{font-size:29px}.about-card h3{font-size:15px;margin:12px 0 7px}.about-card p{font-size:12px;color:var(--muted);line-height:1.65;margin:0}
+    .teacher-help{border:1px solid #ded6f6;border-radius:18px;background:#f1edfc;margin:24px 0 41px;overflow:hidden}.teacher-help summary{cursor:pointer;padding:17px 21px;font-size:13px;font-weight:900;color:#5742bb}.teacher-help[open] summary{border-bottom:1px solid #ded6f6}.teacher-help .teacher-body{padding:14px 21px 20px;color:#5e5479;font-size:12px;line-height:1.75}.teacher-help code{background:#fff;padding:3px 6px;border-radius:6px;overflow-wrap:anywhere}.teacher-body p:last-child{margin-bottom:0}
+    footer{border-top:1px solid #e6e1ef;padding:25px 0 32px;color:#867f96;font-size:12px}.footer-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}footer strong{color:#6854d5}
+    @media(max-width:850px){.browser{grid-template-columns:255px minmax(0,1fr)}.hero-content{padding:25px 35px}.hero h1{font-size:39px}.cards{grid-template-columns:1fr}.course{min-height:195px}}
+    @media(max-width:690px){.wrap{width:min(100% - 28px,560px)}.nav{min-height:67px}.nav-right a{display:none}.brand{font-size:17px}.brand-mark{height:39px;width:39px}.header-pill{font-size:10px;padding:8px}.hero{margin-top:16px;border-radius:25px}.hero-content{display:block;padding:26px 23px 0}.hero h1{font-size:clamp(29px,7vw,42px)}.hero p{font-size:12px;line-height:1.65;margin-bottom:18px}.hero-art{height:215px;width:255px;margin:0 auto}.art-ripple{width:195px;height:195px;left:29px;top:6px}.teacher-svg{width:185px;height:210px}.float{font-size:22px}.float.b{top:38px}.hero-actions{gap:9px}.action{font-size:11px;padding:10px 13px;min-height:40px}.summary{margin:15px 0 30px;gap:8px}.summary-item{padding:11px 13px;gap:8px;min-width:calc(50% - 5px)}.summary-icon{font-size:18px}.summary strong{font-size:12px}.summary small{font-size:10px}.section-intro{align-items:start}.section-intro h2{font-size:25px}.tiny-hint{display:none}.browser{grid-template-columns:1fr;gap:20px}.side{padding:18px}.grade-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.grade-btn{min-height:80px;border-radius:12px}.grade-btn .grade-icon{font-size:20px}.grade-btn strong{font-size:12px}.grade-btn small{font-size:9px}.sidebar-divider{margin:17px 0}.subject-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.subject-btn{padding:9px;font-size:11px;gap:7px;min-height:48px}.subject-btn .subject-icon{font-size:15px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.course{padding:14px;min-height:220px}.course h4{font-size:15px}.course p{font-size:11px}.course-art{width:46px;height:46px;border-radius:14px;font-size:22px}.course-level{font-size:10px}.course-link{font-size:10px;padding:9px}.course-state{font-size:9px}.about{margin-top:40px}.about-grid{grid-template-columns:1fr;gap:10px}.about-card{text-align:left;display:grid;grid-template-columns:42px 1fr;align-items:center;padding:16px;gap:0 7px}.about-card .emoji{grid-row:span 2}.about-card h3{margin:0 0 4px}.about-card p{font-size:11px}}
+    @media(max-width:410px){.wrap{width:min(100% - 24px,480px)}.brand small{font-size:9px}.header-pill{font-size:9px}.hero-content{padding:23px 18px 0}.hero h1{font-size:31px}.hero-art{height:190px;width:230px}.teacher-svg{width:173px;height:196px}.art-ripple{width:177px;height:177px;left:28px}.cards{grid-template-columns:1fr}.course{min-height:190px}.course h4{font-size:17px}.summary-item{min-width:calc(50% - 5px)}.subject-btn{font-size:10px}.footer-row{display:block}.footer-row span{display:block;margin-top:8px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="./index.html" aria-label="Hacer Hoca ana sayfa">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>Hacer Hoca<small>ÖĞRENME ATÖLYESİ</small></span>
+      </a>
+      <nav class="nav-right" aria-label="Ana menü">
+        <a href="#kesfet">Etkinlikler</a>
+        <a href="#nasil-calisir">Nasıl çalışır?</a>
+        <span class="header-pill">● Ücretsiz Eğitim</span>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-shapes" aria-hidden="true"><span>✧</span><span>＋</span></div>
+      <div class="hero-content">
+        <div>
+          <div class="eyebrow">✨ Minik kâşiflere özel</div>
+          <h1 id="hero-title">Merhaba, <em>bilgi kâşifi!</em> 👋</h1>
+          <p>Sınıfını seç, sevdiğin dersi bul ve Hacer Hoca ile yeni bir öğrenme macerasına çık. Her adımda yeni bir şey keşfet!</p>
+          <div class="hero-actions">
+            <a href="#kesfet" class="action primary">🚀 Etkinliğimi seç <span aria-hidden="true">→</span></a>
+            <a href="#nasil-calisir" class="action outline">Nasıl çalışır?</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-ripple"></div>
+          <span class="float a">🔢</span><span class="float b">⭐</span><span class="float c">📚</span><span class="float d">🎈</span>
+          <svg class="teacher-svg" viewBox="0 0 255 293" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="127" cy="275" rx="89" ry="12" fill="#352987" opacity=".35"/>
+            <path d="M82 180q45-20 91 0l25 77q-65 37-142 0z" fill="#ffc95b"/>
+            <path d="M85 177Q58 172 43 217l-16 30 27 10 37-49M171 178q25-2 41 32l18 29-23 13-45-49" fill="#ffd1ae" stroke="#e8a67a" stroke-width="3"/>
+            <path d="M76 177q54-17 104 0l22 65q-69 30-149 0z" fill="#70d2ba"/>
+            <path d="M100 181l28 32 29-32" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>
+            <path d="M85 88q-6-50 37-61 53-10 66 39l-3 74q-11 41-59 48Q89 185 80 140z" fill="#45316c"/>
+            <circle cx="174" cy="55" r="30" fill="#45316c"/>
+            <path d="M85 113q0-45 42-48 44-3 45 47v24q-6 41-45 47-38-3-42-48z" fill="#ffcfad"/>
+            <path d="M85 111q-17-42 16-61 24-14 56 0 11 15 17 53-21-11-32-30-13 17-57 38" fill="#45316c"/>
+            <circle cx="85" cy="134" r="10" fill="#ffcfad"/><circle cx="174" cy="134" r="10" fill="#ffcfad"/>
+            <g fill="none" stroke="#795f98" stroke-width="4"><circle cx="111" cy="129" r="16"/><circle cx="148" cy="129" r="16"/><path d="M127 126h6"/></g>
+            <circle cx="111" cy="129" r="3" fill="#44365f"/><circle cx="148" cy="129" r="3" fill="#44365f"/>
+            <path d="M122 147q7 8 15 0" fill="none" stroke="#b96772" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="95" cy="148" r="8" fill="#ff9f9f" opacity=".45"/><circle cx="163" cy="148" r="8" fill="#ff9f9f" opacity=".45"/>
+            <path d="M92 221q35 20 73 0" stroke="#35aa98" stroke-width="4" fill="none"/>
+            <path d="M155 229l30-4 5 48-36 2z" fill="#fff6db" stroke="#6f53bc" stroke-width="3"/><text x="160" y="256" font-size="20" font-weight="bold" fill="#6854d5">½</text>
+            <path d="M25 246l-7-17q-4-10 5-13 11-2 12 12l5-22q2-7 9-4l1 25 10-9q9-5 12 2l-16 30" fill="#ffcfad" stroke="#e8a67a" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <div class="summary" aria-label="Portal özellikleri">
+      <div class="summary-item"><span class="summary-icon" aria-hidden="true">🎒</span><span><strong>1–4. sınıflar</strong><small>Sınıfına göre seçim</small></span></div>
+      <div class="summary-item"><span class="summary-icon" aria-hidden="true">🎯</span><span><strong>Ders ve konu seçimi</strong><small>İlgilendiğini keşfet</small></span></div>
+      <div class="summary-item"><span class="summary-icon" aria-hidden="true">🏅</span><span><strong>Gelişim karnesi</strong><small>Aktif sınavlarda</small></span></div>
+    </div>
+    <section id="kesfet" aria-labelledby="section-title">
+      <div class="section-intro"><div><span class="kicker">MACERA SENİ BEKLİYOR</span><h2 id="section-title">Ne öğrenmek istersin?</h2><p>Önce sınıfını, sonra dersini seç. Etkinlikler hemen karşına çıksın.</p></div><span class="tiny-hint">✨ Öğrenmek bir macera!</span></div>
+      <div class="browser">
+        <aside class="side" aria-label="Sınıf ve ders seçimi">
+          <p class="fieldset-title"><span class="step-bubble">1</span> Sınıfını seç</p>
+          <div class="grade-grid" id="grade-options" role="group" aria-label="Sınıf düzeyi">
+            <button type="button" class="grade-btn" data-grade="1" aria-pressed="false"><span class="grade-icon" aria-hidden="true">🌱</span><strong>1. Sınıf</strong><small>Başlangıç</small></button>
+            <button type="button" class="grade-btn" data-grade="2" aria-pressed="false"><span class="grade-icon" aria-hidden="true">🌼</span><strong>2. Sınıf</strong><small>Keşif</small></button>
+            <button type="button" class="grade-btn" data-grade="3" aria-pressed="true"><span class="grade-icon" aria-hidden="true">🚀</span><strong>3. Sınıf</strong><small>Macera</small></button>
+            <button type="button" class="grade-btn" data-grade="4" aria-pressed="false"><span class="grade-icon" aria-hidden="true">🏆</span><strong>4. Sınıf</strong><small>Ustalık</small></button>
+          </div>
+          <hr class="sidebar-divider">
+          <p class="fieldset-title"><span class="step-bubble">2</span> Dersini seç</p>
+          <div id="subject-options" class="subject-list" role="group" aria-label="Dersler"></div>
+        </aside>
+        <div class="catalog">
+          <div class="catalog-head"><div><h3 id="catalog-title">3. Sınıf Matematik</h3><p class="catalog-desc" id="catalog-desc">Hadi konunu seç ve başla!</p></div><span id="ready-count" class="count-tag" aria-live="polite">1 etkinlik hazır</span></div>
+          <label class="search-row" for="topic-search">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+            <input id="topic-search" type="search" autocomplete="off" placeholder="Konularda ara..." aria-label="Konularda ara">
+          </label>
+          <div id="topic-cards" class="cards" aria-live="polite"></div>
+          <div id="empty-state" class="empty" hidden><div class="emoji" aria-hidden="true">🔎</div><h4>Henüz sonuç bulamadık</h4><p>Başka bir konu arayabilir veya farklı bir ders seçebilirsin.</p></div>
+          <div class="tip"><strong>💜 Hacer Hoca'dan not:</strong> Yeşil “Başla” etiketli etkinlikler hazırdır. Diğer konular hazırlanma aşamasında; henüz sınavları bulunmuyor.</div>
+        </div>
+      </div>
+    </section>
+    <section class="about" id="nasil-calisir" aria-labelledby="about-title">
+      <div class="about-head"><span class="kicker">KÜÇÜK ADIMLAR, BÜYÜK KEŞİFLER</span><h2 id="about-title">Burada öğrenmek çok kolay!</h2><p>Sadece üç adımda kendi öğrenme yolculuğunu başlat.</p></div>
+      <div class="about-grid">
+        <div class="about-card"><div class="emoji" aria-hidden="true">👆</div><h3>1. Sınıfını ve dersini seç</h3><p>Hangi sınıfta olduğunu belirt, çalışmak istediğin derse dokun.</p></div>
+        <div class="about-card"><div class="emoji" aria-hidden="true">🧩</div><h3>2. Soruları düşünerek çöz</h3><p>Hazır etkinliklerde soruları sırayla cevapla; gerekirse ipuçlarından yararlan.</p></div>
+        <div class="about-card"><div class="emoji" aria-hidden="true">🌟</div><h3>3. Başarını keşfet</h3><p>Değerlendirme karnende güçlü yanlarını ve çalışabileceğin konuları gör.</p></div>
+      </div>
+    </section>
+    <details class="teacher-help" id="ogretmen-rehberi"><summary>👩‍🏫 Öğretmen köşesi · Yeni konu nasıl eklenir?</summary><div class="teacher-body"><p>Bu portal öğretmenler için genişletilebilir bir başlangıçtır. Aktif Kesirler uygulaması <code>etkinlikler/3-sinif/matematik/kesirler/index.html</code> konumundadır.</p><p>Yeni konuyu aynı şekilde ayrı bir klasöre yerleştirip bu ana sayfanın <code>ACTIVITIES</code> listesindeki ilgili kaydın <code>status</code> değerini <code>"ready"</code> yapın ve <code>path</code> alanına dosyanın göreli adresini ekleyin. Hazır olmayan konuların bağlantısı açılmaz.</p><p>Portal ve sınavlar statik dosyalardan oluşur. Öğrenci adları ve sınav sonuçları bir sunucuya otomatik olarak kaydedilmez.</p></div></details>
+  </main>
+  <footer><div class="wrap footer-row"><span><strong>✦ Hacer Hoca</strong> · Öğrenme Atölyesi</span><span>Reklamsız • Ücretsiz • Öğrenciler için hazırlanmıştır</span></div></footer>
+  <script>
+    'use strict';
+    // New topics can be added here. Keep status="upcoming" until the referenced file exists.
+    const SUBJECTS={
+      math:{label:'Matematik',icon:'🔢'},
+      turkish:{label:'Türkçe',icon:'📖'},
+      life:{label:'Hayat Bilgisi',icon:'🌍'},
+      science:{label:'Fen Bilimleri',icon:'🔬'},
+      social:{label:'Sosyal Bilgiler',icon:'🧭'}
+    };
+    const GRADE_SUBJECTS={1:['math','turkish','life'],2:['math','turkish','life'],3:['math','turkish','life','science'],4:['math','turkish','science','social']};
+    const ACTIVITIES=[
+      {grade:1,subject:'math',title:'Sayıların Dünyası',description:'Nesneleri sayalım, sayıları karşılaştıralım.',icon:'🔢',tint:'#e9f5ff'},
+      {grade:1,subject:'math',title:'Geometrik Şekiller',description:'Çevremizdeki şekilleri keşfedelim.',icon:'🔷',tint:'#f4eeff'},
+      {grade:1,subject:'turkish',title:'Kelimelerle Oynuyorum',description:'Sesleri, sözcükleri ve anlamları bulalım.',icon:'🔤',tint:'#fff2df'},
+      {grade:1,subject:'life',title:'Ben ve Okulum',description:'Okul yaşamını birlikte keşfedelim.',icon:'🏫',tint:'#e4f8ef'},
+      {grade:2,subject:'math',title:'Toplama ve Çıkarma',description:'Günlük yaşamda sayılarla çözüm üretelim.',icon:'➕',tint:'#f4eeff'},
+      {grade:2,subject:'math',title:'Örüntü Avcıları',description:'Sayı ve şekil örüntülerinin kuralını bulalım.',icon:'🧩',tint:'#e9f5ff'},
+      {grade:2,subject:'turkish',title:'Metni Anlıyorum',description:'Okuduğumuz metinlerden ipuçları çıkaralım.',icon:'📚',tint:'#fff1df'},
+      {grade:2,subject:'life',title:'Güvenli Yaşam',description:'Günlük hayatta güvenli davranışları öğrenelim.',icon:'🛡️',tint:'#e4f8ef'},
+      {grade:3,subject:'math',title:'Yeni Nesil Kesirler',description:'Görsel sorular, akıl yürütme, ipuçları ve kişisel gelişim karnesi.',icon:'🍕',tint:'#ffece5',status:'ready',path:'./etkinlikler/3-sinif/matematik/kesirler/index.html',detail:'10 soruluk interaktif sınav'},
+      {grade:3,subject:'math',title:'Çarpma ve Bölme',description:'Günlük yaşam problemlerini adım adım çözelim.',icon:'✖️',tint:'#e9f5ff'},
+      {grade:3,subject:'math',title:'Geometrik Şekiller',description:'Şekilleri karşılaştıralım ve tasarlayalım.',icon:'🔺',tint:'#f1ebff'},
+      {grade:3,subject:'math',title:'Zamanı Ölçüyorum',description:'Saatler ve sürelerle akıl yürütelim.',icon:'⏰',tint:'#fff4df'},
+      {grade:3,subject:'turkish',title:'Okuduğunu Anlama',description:'Bir metindeki ipuçlarını bulup yorumlayalım.',icon:'📘',tint:'#e9f5ff'},
+      {grade:3,subject:'turkish',title:'Sözcük Dedektifleri',description:'Sözcüklerin farklı anlamlarını keşfedelim.',icon:'🔎',tint:'#f6edff'},
+      {grade:3,subject:'life',title:'Bilinçli ve Güvenli Yaşam',description:'Günlük durumlar için doğru kararları düşünelim.',icon:'🌈',tint:'#e5f7eb'},
+      {grade:3,subject:'science',title:'Maddeyi Tanıyalım',description:'Çevremizdeki maddeleri özelliklerine göre inceleyelim.',icon:'🧪',tint:'#e7f7fd'},
+      {grade:3,subject:'science',title:'Işık ve Ses',description:'Gözlem yapalım, neden-sonuç ilişkisi kuralım.',icon:'💡',tint:'#fff5dc'},
+      {grade:4,subject:'math',title:'Kesirler',description:'Bütün ve parça ilişkisini farklı yollarla keşfedelim.',icon:'🥧',tint:'#ffede4'},
+      {grade:4,subject:'math',title:'Doğal Sayılar',description:'Sayıları karşılaştırıp problemler çözelim.',icon:'🔢',tint:'#eaf1ff'},
+      {grade:4,subject:'turkish',title:'Paragraf ve Ana Fikir',description:'Metinlerden sonuçlar çıkaralım ve yorumlayalım.',icon:'📖',tint:'#f2edff'},
+      {grade:4,subject:'science',title:'Kuvvetin Etkileri',description:'Hareket ve kuvvet hakkında tahminler yapalım.',icon:'🧲',tint:'#e3f7ef'},
+      {grade:4,subject:'social',title:'Yaşadığımız Yer',description:'Yakın çevremiz hakkında yeni bilgiler keşfedelim.',icon:'🧭',tint:'#fff1df'}
+    ];
+    const state={grade:3,subject:'math',search:''};
+    const byId=id=>document.getElementById(id);
+    function escapeHtml(input){return String(input).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function renderSubjects(){
+      const target=byId('subject-options'); target.replaceChildren();
+      for(const key of GRADE_SUBJECTS[state.grade]){
+        const subject=SUBJECTS[key],button=document.createElement('button');
+        button.type='button';button.className='subject-btn';button.dataset.subject=key;button.setAttribute('aria-pressed',String(state.subject===key));
+        button.innerHTML=`<span class="subject-icon" aria-hidden="true">${subject.icon}</span><span>${subject.label}</span>`;
+        button.addEventListener('click',()=>{state.subject=key;state.search='';byId('topic-search').value='';renderSubjects();renderTopics()});target.append(button);
+      }
+    }
+    function renderTopics(){
+      const available=ACTIVITIES.filter(a=>a.grade===state.grade&&a.subject===state.subject);
+      const visible=available.filter(a=>(a.title+' '+a.description).toLocaleLowerCase('tr').includes(state.search.toLocaleLowerCase('tr')));
+      const readyCount=available.filter(a=>a.status==='ready').length;
+      byId('catalog-title').textContent=`${state.grade}. Sınıf ${SUBJECTS[state.subject].label}`;
+      byId('catalog-desc').textContent=`${available.length} konu seni bekliyor; hazır olanlardan hemen başlayabilirsin.`;
+      byId('ready-count').textContent=`${readyCount} etkinlik hazır`;
+      byId('empty-state').hidden=visible.length>0;
+      const parent=byId('topic-cards');parent.replaceChildren();
+      for(const activity of visible){
+        const ready=activity.status==='ready'&&typeof activity.path==='string';
+        const card=document.createElement('article');card.className='course'+(ready?'':' upcoming');card.style.setProperty('--tint',activity.tint||'#f4eeff');
+        card.innerHTML=`<div class="course-top"><span class="course-art" aria-hidden="true">${escapeHtml(activity.icon)}</span><span class="course-state ${ready?'ready':''}">${ready?'✓ Hazır':'Hazırlanıyor'}</span></div>
+          <h4>${escapeHtml(activity.title)}</h4><p>${escapeHtml(activity.description)}</p><div class="course-bottom"><span class="course-level">${ready?escapeHtml(activity.detail||'Etkileşimli etkinlik'):'Yeni etkinlik'}</span>${ready?'<a class="course-link" href="'+escapeHtml(activity.path)+'">Başla <span aria-hidden="true">→</span></a>':'<span class="course-coming">Yakında</span>'}</div>`;
+        parent.append(card);
+      }
+    }
+    for(const btn of document.querySelectorAll('[data-grade]')){
+      btn.addEventListener('click',()=>{
+        const grade=Number(btn.dataset.grade); if(!GRADE_SUBJECTS[grade])return;
+        state.grade=grade;state.subject=GRADE_SUBJECTS[grade][0];state.search='';byId('topic-search').value='';
+        document.querySelectorAll('[data-grade]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.grade)===grade)));
+        renderSubjects();renderTopics();
+      });
+    }
+    byId('topic-search').addEventListener('input',e=>{state.search=e.target.value.trim();renderTopics()});
+    renderSubjects();renderTopics();
+  </script>
+</body>
+</html>
