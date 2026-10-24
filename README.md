@@ -1,37 +1,43 @@
-# Hacer Hoca Öğrenme Atölyesi — GitHub Pages paketi
+# Hacer Hoca Öğrenme Atölyesi — Kolay Konu Ekleme, sürüm 2
 
-Bu paket harici kütüphane, sunucu, domain veya ücretli hosting gerektirmez.
+Bu paket mevcut `hacer-hoca` portalını genişletir; hazır **Yeni Nesil Kesirler** sınavını korur.
 
-## İçerik
+## Bir defalık güncelleme
 
-- `index.html`: Sınıf (1–4), ders, konu seçimi ve arama özellikli ana eğitim portalı.
-- `etkinlikler/3-sinif/matematik/kesirler/index.html`: Daha önce hazırlanan 10 soruluk interaktif kesirler değerlendirmesi. Geri dön bağlantısı eklidir.
-- `.nojekyll`: GitHub Pages'in dosyaları olduğu gibi sunması için.
+1. `hacer-hoca` GitHub deposunun ana sayfasını aç.
+2. ZIP arşivini bilgisayarında çıkar. ZIP içindeki dosyaları (ZIP'in kendisini değil) depo köküne yükle.
+3. Var olan `index.html` ve `README.md` dosyalarının değiştirilmesini onayla. `etkinlikler/3-sinif/matematik/kesirler/index.html` eskisiyle aynıdır.
+4. Yeni `data/konular.json` ve `araclar/konu-ekle.html` dosyaları eklenmiş olmalı.
+5. `Commit changes` yap. GitHub Pages sitesi aynı adreste kalır.
 
-## Yayınlama (mevcut siteyi bozmadan)
+## Yeni konu ekleme (bundan sonra)
 
-1. Arkadaşının hesabında GitHub'a giriş yap: `hcrgcr2026`.
-2. `New repository` ile **hacer-hoca** adlı bir **Public** depo aç.
-3. Bu ZIP dosyasını bilgisayarında aç, **ZIP'İ DEĞİL İÇİNDEKİ DOSYALARI** depoya yükle. Klasör yollarını koru.
-   - Kök dizinde `index.html` olmalı.
-   - Kesir uygulaması `etkinlikler/3-sinif/matematik/kesirler/index.html` yolunda olmalı.
-   - GitHub web arayüzü klasör yüklemede zorlanırsa proje klasörünün tamamını GitHub Desktop ile aktar.
-4. Repo > Settings > Pages > Source: `Deploy from a branch` > Branch: `main` > Folder: `/(root)` > Save.
-5. Yayın adresi: `https://hcrgcr2026.github.io/hacer-hoca/`
+1. Portaldaki **Öğretmen Aracı** bağlantısını aç veya şu adrese git:
+   `https://hcrgcr2026.github.io/hacer-hoca/araclar/konu-ekle.html`
+2. Sınıf, ders, konu ve açıklama alanlarını doldur. Hazırladığın **tek dosyalık HTML** sınavını seç.
+3. **GitHub paketini hazırla** düğmesine bas. `hacer-hoca-yeni-konu.zip` iner.
+4. ZIP'i aç. İçinde tam iki dosya bulunur:
+   - `data/konular.json`
+   - `etkinlikler/<sinif>-sinif/<ders>/<konu>/index.html`
+5. Bu iki dosyayı **aynı klasör yollarını koruyarak** GitHub deposuna yükle, var olan `data/konular.json` dosyasının üzerine yaz, Commit changes yap.
+6. Portal kendi kataloğunu `data/konular.json` üzerinden okuduğundan ana `index.html` değişmeden konu “Başla” olur.
 
-**Not:** Yukarıdaki adres ancak depo oluşturulup GitHub Pages yayınlandıktan sonra çalışır. Mevcut `yeni-nesil-sorular-kesirler` deponuz değişmez.
+**Dikkat:** GitHub tarayıcı yükleyicisi tek bir ZIP dosyasını otomatik açmaz. Dosyalar ayrı ayrı doğru hedef klasöre konulmalıdır. Klasör yapısını korumak için GitHub Desktop da kullanılabilir.
 
-## Yeni ders/konu ekleme
+## Mimari
+- `index.html`: Tek merkezi giriş portalı. Konuları `fetch('./data/konular.json')` ile okur.
+- `data/konular.json`: Konu kataloğu. Etkinlik kartlarının durumunu, açıklamasını ve yolunu tutar.
+- `araclar/konu-ekle.html`: İnternet üzerinde çalışırken güncel katalog yükler ve yeni sınav HTML ile birlikte güncellenmiş katalog ZIP'i üretir. API anahtarı veya dış kütüphane kullanmaz.
+- `etkinlikler/.../index.html`: Her konunun bağımsız interaktif HTML dosyası.
 
-1. Örnek: `etkinlikler/3-sinif/matematik/carpma/index.html` klasörüne uygulamanı yerleştir.
-2. Portalın kök `index.html` dosyasında `const ACTIVITIES = [` satırını bul.
-3. `grade:3, subject:'math', title:'Çarpma ve Bölme'` kaydını `status:'ready', path:'./etkinlikler/3-sinif/matematik/carpma/index.html', detail:'10 soruluk sınav'` alanlarıyla güncelle.
-4. Değişiklikleri GitHub'a gönder. Kart otomatik olarak tıklanabilir olacaktır.
+## Özellik ve güvenlik notları
+- Bu araç GitHub'a giriş yapmaz veya otomatik yazma yapmaz. Öğretmen dosyaları kendisi yükler.
+- Yalnızca güvenilen HTML sınavları yayınlanmalıdır. Yüklenen JavaScript site kökeninde çalışır.
+- Öğrenci adları ve karneler merkezi sunucuda toplanmaz.
+- Tarayıcıda birden fazla sekmeyle aynı anda konu paketi oluşturup eski katalogları yükleme: her yeni konu eklendikten sonra yönetim aracını yeniden açarak güncel kataloğu yükle.
+- Ana sayfayı `file://` ile doğrudan açarsan yeni katalog tarayıcı güvenliği nedeniyle yüklenmeyebilir. Yayınlanan GitHub Pages bağlantısını kullan.
 
-## Önemli
+## Eklenecek konu için hazır komut
+`HACER YENİ KONU: 3. Sınıf | Matematik | Çarpma ve Bölme`
 
-- Yalnızca **3. sınıf Matematik / Yeni Nesil Kesirler** etkinliği bu pakette hazırdır. Diğer kartlar planlanmış konu başlıklarıdır ve sınavları henüz yoktur.
-- GitHub Pages statik bir barındırmadır; öğrencilerin sonuçlarını öğretmene merkezi olarak göndermez.
-- Sınav karnesi öğrencinin cihazında görüntülenir ve indirilebilir.
-- Ana portalda öğrenci bilgisi istenmez veya gönderilmez; kesirler sınavı yalnızca kendi çalışma akışında ad-soyad ister.
-- Uygulama yerel olarak `index.html` dosyasına çift tıklanarak da önizlenebilir.
+Yönetim aracındaki **Gemini komutunu kopyala** düğmesi bunun detaylı sürümünü üretir.

@@ -107,6 +107,7 @@
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
             <input id="topic-search" type="search" autocomplete="off" placeholder="Konularda ara..." aria-label="Konularda ara">
           </label>
+          <div id="catalog-alert" class="tip" role="status" hidden></div>
           <div id="topic-cards" class="cards" aria-live="polite"></div>
           <div id="empty-state" class="empty" hidden><div class="emoji" aria-hidden="true">🔎</div><h4>Henüz sonuç bulamadık</h4><p>Başka bir konu arayabilir veya farklı bir ders seçebilirsin.</p></div>
           <div class="tip"><strong>💜 Hacer Hoca'dan not:</strong> Yeşil “Başla” etiketli etkinlikler hazırdır. Diğer konular hazırlanma aşamasında; henüz sınavları bulunmuyor.</div>
@@ -121,7 +122,7 @@
         <div class="about-card"><div class="emoji" aria-hidden="true">🌟</div><h3>3. Başarını keşfet</h3><p>Değerlendirme karnende güçlü yanlarını ve çalışabileceğin konuları gör.</p></div>
       </div>
     </section>
-    <details class="teacher-help" id="ogretmen-rehberi"><summary>👩‍🏫 Öğretmen köşesi · Yeni konu nasıl eklenir?</summary><div class="teacher-body"><p>Bu portal öğretmenler için genişletilebilir bir başlangıçtır. Aktif Kesirler uygulaması <code>etkinlikler/3-sinif/matematik/kesirler/index.html</code> konumundadır.</p><p>Yeni konuyu aynı şekilde ayrı bir klasöre yerleştirip bu ana sayfanın <code>ACTIVITIES</code> listesindeki ilgili kaydın <code>status</code> değerini <code>"ready"</code> yapın ve <code>path</code> alanına dosyanın göreli adresini ekleyin. Hazır olmayan konuların bağlantısı açılmaz.</p><p>Portal ve sınavlar statik dosyalardan oluşur. Öğrenci adları ve sınav sonuçları bir sunucuya otomatik olarak kaydedilmez.</p></div></details>
+    <details class="teacher-help" id="ogretmen-rehberi"><summary>👩‍🏫 Öğretmen köşesi · Yeni konu nasıl eklenir?</summary><div class="teacher-body"><p>Yeni konular artık ana sayfanın kodu değiştirilmeden eklenir. <a href="./araclar/konu-ekle.html" style="color:#5945c8;font-weight:800;text-decoration:underline">Konu Ekleme Aracı'nı aç</a>, sınıfı, dersi, konu başlığını seç ve hazırladığın tek dosyalık HTML sınavını yükle. Araç gerekli dosyaları ZIP olarak üretir.</p><p>ZIP'i açıp içindeki <code>data/konular.json</code> ve yeni <code>etkinlikler/.../index.html</code> dosyasını GitHub deposunda aynı klasör yollarına yükle. Mevcut portal <code>index.html</code> dosyasına dokunma.</p><p>Bu portal yalnızca statik dosyalar kullanır. Öğrenci sonuçları öğretmene otomatik gönderilmez.</p></div></details>
   </main>
   <footer><div class="wrap footer-row"><span><strong>✦ Hacer Hoca</strong> · Öğrenme Atölyesi</span><span>Reklamsız • Ücretsiz • Öğrenciler için hazırlanmıştır</span></div></footer>
   <script>
@@ -135,30 +136,10 @@
       social:{label:'Sosyal Bilgiler',icon:'🧭'}
     };
     const GRADE_SUBJECTS={1:['math','turkish','life'],2:['math','turkish','life'],3:['math','turkish','life','science'],4:['math','turkish','science','social']};
-    const ACTIVITIES=[
-      {grade:1,subject:'math',title:'Sayıların Dünyası',description:'Nesneleri sayalım, sayıları karşılaştıralım.',icon:'🔢',tint:'#e9f5ff'},
-      {grade:1,subject:'math',title:'Geometrik Şekiller',description:'Çevremizdeki şekilleri keşfedelim.',icon:'🔷',tint:'#f4eeff'},
-      {grade:1,subject:'turkish',title:'Kelimelerle Oynuyorum',description:'Sesleri, sözcükleri ve anlamları bulalım.',icon:'🔤',tint:'#fff2df'},
-      {grade:1,subject:'life',title:'Ben ve Okulum',description:'Okul yaşamını birlikte keşfedelim.',icon:'🏫',tint:'#e4f8ef'},
-      {grade:2,subject:'math',title:'Toplama ve Çıkarma',description:'Günlük yaşamda sayılarla çözüm üretelim.',icon:'➕',tint:'#f4eeff'},
-      {grade:2,subject:'math',title:'Örüntü Avcıları',description:'Sayı ve şekil örüntülerinin kuralını bulalım.',icon:'🧩',tint:'#e9f5ff'},
-      {grade:2,subject:'turkish',title:'Metni Anlıyorum',description:'Okuduğumuz metinlerden ipuçları çıkaralım.',icon:'📚',tint:'#fff1df'},
-      {grade:2,subject:'life',title:'Güvenli Yaşam',description:'Günlük hayatta güvenli davranışları öğrenelim.',icon:'🛡️',tint:'#e4f8ef'},
-      {grade:3,subject:'math',title:'Yeni Nesil Kesirler',description:'Görsel sorular, akıl yürütme, ipuçları ve kişisel gelişim karnesi.',icon:'🍕',tint:'#ffece5',status:'ready',path:'./etkinlikler/3-sinif/matematik/kesirler/index.html',detail:'10 soruluk interaktif sınav'},
-      {grade:3,subject:'math',title:'Çarpma ve Bölme',description:'Günlük yaşam problemlerini adım adım çözelim.',icon:'✖️',tint:'#e9f5ff'},
-      {grade:3,subject:'math',title:'Geometrik Şekiller',description:'Şekilleri karşılaştıralım ve tasarlayalım.',icon:'🔺',tint:'#f1ebff'},
-      {grade:3,subject:'math',title:'Zamanı Ölçüyorum',description:'Saatler ve sürelerle akıl yürütelim.',icon:'⏰',tint:'#fff4df'},
-      {grade:3,subject:'turkish',title:'Okuduğunu Anlama',description:'Bir metindeki ipuçlarını bulup yorumlayalım.',icon:'📘',tint:'#e9f5ff'},
-      {grade:3,subject:'turkish',title:'Sözcük Dedektifleri',description:'Sözcüklerin farklı anlamlarını keşfedelim.',icon:'🔎',tint:'#f6edff'},
-      {grade:3,subject:'life',title:'Bilinçli ve Güvenli Yaşam',description:'Günlük durumlar için doğru kararları düşünelim.',icon:'🌈',tint:'#e5f7eb'},
-      {grade:3,subject:'science',title:'Maddeyi Tanıyalım',description:'Çevremizdeki maddeleri özelliklerine göre inceleyelim.',icon:'🧪',tint:'#e7f7fd'},
-      {grade:3,subject:'science',title:'Işık ve Ses',description:'Gözlem yapalım, neden-sonuç ilişkisi kuralım.',icon:'💡',tint:'#fff5dc'},
-      {grade:4,subject:'math',title:'Kesirler',description:'Bütün ve parça ilişkisini farklı yollarla keşfedelim.',icon:'🥧',tint:'#ffede4'},
-      {grade:4,subject:'math',title:'Doğal Sayılar',description:'Sayıları karşılaştırıp problemler çözelim.',icon:'🔢',tint:'#eaf1ff'},
-      {grade:4,subject:'turkish',title:'Paragraf ve Ana Fikir',description:'Metinlerden sonuçlar çıkaralım ve yorumlayalım.',icon:'📖',tint:'#f2edff'},
-      {grade:4,subject:'science',title:'Kuvvetin Etkileri',description:'Hareket ve kuvvet hakkında tahminler yapalım.',icon:'🧲',tint:'#e3f7ef'},
-      {grade:4,subject:'social',title:'Yaşadığımız Yer',description:'Yakın çevremiz hakkında yeni bilgiler keşfedelim.',icon:'🧭',tint:'#fff1df'}
-    ];
+    // Konular, GitHub Pages'te barındırılan harici katalogdan okunur.
+    // Yeni konu eklemek için bu dosyaya müdahale ETME: /araclar/konu-ekle.html kullan.
+    const DEFAULT_ACTIVITIES=[{"grade":1,"subject":"math","title":"Sayıların Dünyası","description":"Nesneleri sayalım, sayıları karşılaştıralım.","icon":"🔢","tint":"#e9f5ff","status":"upcoming"},{"grade":1,"subject":"math","title":"Geometrik Şekiller","description":"Çevremizdeki şekilleri keşfedelim.","icon":"🔷","tint":"#f4eeff","status":"upcoming"},{"grade":1,"subject":"turkish","title":"Kelimelerle Oynuyorum","description":"Sesleri, sözcükleri ve anlamları bulalım.","icon":"🔤","tint":"#fff2df","status":"upcoming"},{"grade":1,"subject":"life","title":"Ben ve Okulum","description":"Okul yaşamını birlikte keşfedelim.","icon":"🏫","tint":"#e4f8ef","status":"upcoming"},{"grade":2,"subject":"math","title":"Toplama ve Çıkarma","description":"Günlük yaşamda sayılarla çözüm üretelim.","icon":"➕","tint":"#f4eeff","status":"upcoming"},{"grade":2,"subject":"math","title":"Örüntü Avcıları","description":"Sayı ve şekil örüntülerinin kuralını bulalım.","icon":"🧩","tint":"#e9f5ff","status":"upcoming"},{"grade":2,"subject":"turkish","title":"Metni Anlıyorum","description":"Okuduğumuz metinlerden ipuçları çıkaralım.","icon":"📚","tint":"#fff1df","status":"upcoming"},{"grade":2,"subject":"life","title":"Güvenli Yaşam","description":"Günlük hayatta güvenli davranışları öğrenelim.","icon":"🛡️","tint":"#e4f8ef","status":"upcoming"},{"grade":3,"subject":"math","title":"Yeni Nesil Kesirler","description":"Görsel sorular, akıl yürütme, ipuçları ve kişisel gelişim karnesi.","icon":"🍕","tint":"#ffece5","status":"ready","path":"./etkinlikler/3-sinif/matematik/kesirler/index.html","detail":"10 soruluk interaktif sınav"},{"grade":3,"subject":"math","title":"Çarpma ve Bölme","description":"Günlük yaşam problemlerini adım adım çözelim.","icon":"✖️","tint":"#e9f5ff","status":"upcoming"},{"grade":3,"subject":"math","title":"Geometrik Şekiller","description":"Şekilleri karşılaştıralım ve tasarlayalım.","icon":"🔺","tint":"#f1ebff","status":"upcoming"},{"grade":3,"subject":"math","title":"Zamanı Ölçüyorum","description":"Saatler ve sürelerle akıl yürütelim.","icon":"⏰","tint":"#fff4df","status":"upcoming"},{"grade":3,"subject":"turkish","title":"Okuduğunu Anlama","description":"Bir metindeki ipuçlarını bulup yorumlayalım.","icon":"📘","tint":"#e9f5ff","status":"upcoming"},{"grade":3,"subject":"turkish","title":"Sözcük Dedektifleri","description":"Sözcüklerin farklı anlamlarını keşfedelim.","icon":"🔎","tint":"#f6edff","status":"upcoming"},{"grade":3,"subject":"life","title":"Bilinçli ve Güvenli Yaşam","description":"Günlük durumlar için doğru kararları düşünelim.","icon":"🌈","tint":"#e5f7eb","status":"upcoming"},{"grade":3,"subject":"science","title":"Maddeyi Tanıyalım","description":"Çevremizdeki maddeleri özelliklerine göre inceleyelim.","icon":"🧪","tint":"#e7f7fd","status":"upcoming"},{"grade":3,"subject":"science","title":"Işık ve Ses","description":"Gözlem yapalım, neden-sonuç ilişkisi kuralım.","icon":"💡","tint":"#fff5dc","status":"upcoming"},{"grade":4,"subject":"math","title":"Kesirler","description":"Bütün ve parça ilişkisini farklı yollarla keşfedelim.","icon":"🥧","tint":"#ffede4","status":"upcoming"},{"grade":4,"subject":"math","title":"Doğal Sayılar","description":"Sayıları karşılaştırıp problemler çözelim.","icon":"🔢","tint":"#eaf1ff","status":"upcoming"},{"grade":4,"subject":"turkish","title":"Paragraf ve Ana Fikir","description":"Metinlerden sonuçlar çıkaralım ve yorumlayalım.","icon":"📖","tint":"#f2edff","status":"upcoming"},{"grade":4,"subject":"science","title":"Kuvvetin Etkileri","description":"Hareket ve kuvvet hakkında tahminler yapalım.","icon":"🧲","tint":"#e3f7ef","status":"upcoming"},{"grade":4,"subject":"social","title":"Yaşadığımız Yer","description":"Yakın çevremiz hakkında yeni bilgiler keşfedelim.","icon":"🧭","tint":"#fff1df","status":"upcoming"}];
+    let ACTIVITIES=DEFAULT_ACTIVITIES.slice();
     const state={grade:3,subject:'math',search:''};
     const byId=id=>document.getElementById(id);
     function escapeHtml(input){return String(input).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -197,7 +178,33 @@
       });
     }
     byId('topic-search').addEventListener('input',e=>{state.search=e.target.value.trim();renderTopics()});
-    renderSubjects();renderTopics();
+    async function loadCatalog(){
+      const alert=byId('catalog-alert');
+      try{
+        const response=await fetch('./data/konular.json',{cache:'no-store'});
+        if(!response.ok)throw new Error('HTTP '+response.status);
+        const catalog=await response.json();
+        if(!catalog || !Array.isArray(catalog.activities))throw new Error('Geçersiz katalog');
+        const candidate=catalog.activities.filter(a=>a&&Number.isInteger(a.grade)&&a.grade>=1&&a.grade<=4&&SUBJECTS[a.subject]&&typeof a.title==='string'&&typeof a.description==='string'&&typeof a.icon==='string');
+        if(!candidate.length)throw new Error('Boş katalog');
+        ACTIVITIES=candidate.map(a=>({
+          ...a,
+          status:a.status==='ready'&&typeof a.path==='string'&&/^\.\/etkinlikler\/[a-z0-9/_-]+\/index\.html$/.test(a.path)?'ready':'upcoming',
+          tint:/^#[0-9a-fA-F]{6}$/.test(a.tint||'')?a.tint:'#f4eeff'
+        }));
+        alert.hidden=true;
+        renderTopics();
+      }catch(err){
+        if(location.protocol==='file:'){
+          alert.textContent='Yerel önizleme: hazır örnek katalog gösteriliyor. Yeni konuları görmek için GitHub Pages üzerinden aç.';
+        }else{
+          alert.textContent='Konu kataloğu alınamadı. Son kayıtlı konu listesi gösteriliyor; sayfayı yenilemeyi deneyin.';
+        }
+        alert.hidden=false;
+        renderTopics();
+      }
+    }
+    renderSubjects();renderTopics();loadCatalog();
   </script>
 </body>
 </html>
