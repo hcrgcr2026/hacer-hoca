@@ -4,14 +4,51 @@
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function status(text,error=false){$('work-status').textContent=text;$('work-status').className='status '+(error?'error':'good');}
  function tdata(){return {grade:Number($('grade').value),subject:$('subject').value,title:$('topic').value.trim(),description:$('description').value.trim(),emoji:$('emoji').value,status:'draft',questions};}
- function validQuestions(qs){if(!Array.isArray(qs)||![10,15,20].includes(qs.length))return '10, 15 veya 20 soru olmalı.';
- for(let i=0;i<qs.length;i++){const q=qs[i];if(!q||!Array.isArray(q.variants)||q.variants.length<1)return `${i+1}. sorunun seçenekleri eksik.`;
- for(const v of q.variants){if(!v||typeof v.prompt!=='string'||v.prompt.trim().length<10||!Array.isArray(v.options)||v.options.length!==3||v.options.some(x=>typeof x!=='string'||!x.trim())||![0,1,2].includes(v.correct)||typeof v.explanation!=='string'||v.explanation.trim().length<5||typeof v.hint!=='string'||!v.hint.trim())return `${i+1}. sorudaki metin, üç seçenek, ipucu veya çözüm eksik.`;}}
- return '';
+ function malformedText(value){return typeof value==='string'&&/\b(?:undefined|nan|null)\b|\[object\s+object\]|(?:undefined)(?:dir|den|dan|ten|tan|tir|dır)/i.test(value);}
+ function malformedText(value){return typeof value==='string'&&/\b(?:undefined|nan|null)\b|\[object\s+object\]|(?:undefined)(?:dir|den|dan|ten|tan|tir|dır)/i.test(value);}
+ function validQuestions(qs){
+  if(!Array.isArray(qs)||![10,15,20].includes(qs.length))return '10, 15 veya 20 soru olmalı.';
+  for(let i=0;i<qs.length;i++){
+   const q=qs[i];
+   if(!q||!Array.isArray(q.variants)||q.variants.length<1||q.variants.length>3)return `${i+1}. aşamanın soru varyantları eksik.`;
+   for(let j=0;j<q.variants.length;j++){
+    const v=q.variants[j],where=`${i+1}. aşama / ${j+1}. varyant`;
+    if(!v||typeof v.prompt!=='string'||v.prompt.trim().length<10||!Array.isArray(v.options)||v.options.length!==3||
+      v.options.some(x=>typeof x!=='string'||!x.trim())||![0,1,2].includes(v.correct)||
+      typeof v.explanation!=='string'||v.explanation.trim().length<5||typeof v.hint!=='string'||!v.hint.trim())
+     return `${where}: soru, üç seçenek, ipucu veya çözüm eksik.`;
+    if([v.prompt,v.hint,v.explanation,...v.options].some(malformedText))
+     return `${where}: "undefined" benzeri hatalı bir ifade var. Soruyu açıp düzeltmeden yayınlama.`;
+    const distinct=new Set(v.options.map(x=>x.trim().toLocaleLowerCase('tr-TR')));
+    if(distinct.size!==3)return `${where}: Üç seçeneğin birbirinden farklı olması gerekiyor.`;
+   }
+  }
+  return '';
  }
- function renderEditor(){const host=$('questions');host.replaceChildren();$('editor-wrap').classList.toggle('hidden',!questions.length);$('qcount').textContent=questions.length+' soru';questions.forEach((q,i)=>{
- const v=q.variants[0];const div=document.createElement('details');div.className='question';div.open=i===0;div.innerHTML=`<summary class="qhead"><strong>🧩 ${i+1}. Aşama · ${esc(q.skill||'Düşünme')}</strong><span class="pill">${Number(q.difficulty)||1}/5</span></summary><div class="question-body"><div class="field"><label>Soru metni</label><textarea data-q="${i}" data-key="prompt">${esc(v.prompt)}</textarea></div><div class="fields">${v.options.map((o,j)=>`<div class="field"><label>${'ABC'[j]} seçeneği</label><input data-q="${i}" data-option="${j}" value="${esc(o)}"></div>`).join('')}<div class="field"><label>Doğru seçenek</label><select data-q="${i}" data-key="correct">${[0,1,2].map(n=>`<option value="${n}" ${n===v.correct?'selected':''}>${'ABC'[n]}</option>`).join('')}</select></div></div><div class="quest-grid"><div class="field"><label>İpucu</label><textarea data-q="${i}" data-key="hint">${esc(v.hint||'')}</textarea></div><div class="field"><label>Çözüm açıklaması</label><textarea data-q="${i}" data-key="explanation">${esc(v.explanation||'')}</textarea></div></div><p class="hint">${q.variants.length>1?'Bu soruda '+q.variants.length+' öğrenci varyantı bulunuyor. Burada ilk varyant düzenlenir; diğerleri korunur.':'Bu sorunun bir varyantı var.'}</p></div>`;host.append(div);});
- host.querySelectorAll('[data-q]').forEach(input=>input.addEventListener('change',e=>{const el=e.currentTarget;const i=Number(el.dataset.q),v=questions[i].variants[0];if(el.dataset.option!==undefined)v.options[Number(el.dataset.option)]=el.value;else if(el.dataset.key==='correct')v.correct=Number(el.value);else v[el.dataset.key]=el.value;}));
+ function renderEditor(){
+  const host=$('questions');host.replaceChildren();$('editor-wrap').classList.toggle('hidden',!questions.length);
+  $('qcount').textContent=questions.length+' soru';
+  questions.forEach((q,i)=>{
+   const div=document.createElement('details');div.className='question';div.open=i===0;
+   const variants=q.variants.map((v,j)=>`<details class="variant-box" ${j===0?'open':''} style="border:1px solid #e9e2f6;border-radius:12px;padding:10px;margin-top:10px">
+     <summary style="cursor:pointer;font-weight:800;padding:7px 0">${j+1}. varyant · ${j===0?'Temel':'Alternatif / daha zor'} · Zorluk ${Number(v.level)||Number(q.difficulty)||1}/5</summary>
+     <div class="field"><label>Soru metni</label><textarea data-q="${i}" data-variant="${j}" data-key="prompt">${esc(v.prompt||'')}</textarea></div>
+     <div class="fields">${(v.options||[]).map((o,k)=>`<div class="field"><label>${'ABC'[k]} seçeneği</label><input data-q="${i}" data-variant="${j}" data-option="${k}" value="${esc(o)}"></div>`).join('')}
+       <div class="field"><label>Doğru seçenek</label><select data-q="${i}" data-variant="${j}" data-key="correct">${[0,1,2].map(n=>`<option value="${n}" ${n===v.correct?'selected':''}>${'ABC'[n]}</option>`).join('')}</select></div>
+     </div><div class="quest-grid"><div class="field"><label>İpucu</label><textarea data-q="${i}" data-variant="${j}" data-key="hint">${esc(v.hint||'')}</textarea></div>
+     <div class="field"><label>Çözüm açıklaması</label><textarea data-q="${i}" data-variant="${j}" data-key="explanation">${esc(v.explanation||'')}</textarea></div></div>
+    </details>`).join('');
+   div.innerHTML=`<summary class="qhead"><strong>🧩 ${i+1}. Aşama · ${esc(q.skill||'Düşünme')}</strong><span class="pill">${Number(q.difficulty)||1}/5</span></summary>
+    <div class="question-body"><p class="hint">Her iki varyantı da kontrol et. Farklı öğrenciler aynı aşamanın farklı sorusunu görebilir.</p>${variants}</div>`;
+   host.append(div);
+  });
+  host.querySelectorAll('[data-q]').forEach(input=>input.addEventListener('input',e=>{
+   const el=e.currentTarget,i=Number(el.dataset.q),j=Number(el.dataset.variant),v=questions[i]?.variants[j];
+   if(!v)return;
+   if(el.dataset.option!==undefined)v.options[Number(el.dataset.option)]=el.value;
+   else if(el.dataset.key==='correct')v.correct=Number(el.value);
+   else v[el.dataset.key]=el.value;
+  }));
  }
  async function demo(){const b=$('demo');b.disabled=true;try{const r=await fetch('../data/ornek-kesirler-20.json',{cache:'no-store'});if(!r.ok)throw Error('Örnek dosyası yüklenmedi');const a=await r.json();questions=a.questions;currentId=null;$('grade').value=a.grade;$('subject').value=a.subject;$('topic').value=a.title;$('description').value=a.description;$('emoji').value=a.emoji;$('count').value=20;renderEditor();status('20 aşamalı Kesirler örneği yüklendi. Soruları kontrol et; hazır olduğunda taslak kaydet.');}catch(e){status('Hata: '+e.message,true)}finally{b.disabled=false}}
  // Daha once GitHub Pages uzerinde yayinlanan etkinlikler de ogretmen listesinde gorunur.
