@@ -18,6 +18,7 @@ async function published(){return await request('/api/assessments');}
 async function getAssessment(id){const s=restore();return await request('/api/assessments/'+encodeURIComponent(id),{},s?.access_token);}
 async function mine(){const s=restore();if(!s)throw new Error('Önce giriş yapın.');return await request('/api/mine',{},s.access_token);}
 async function upsert(data){const s=restore();if(!s)throw new Error('Oturum sona erdi.');const id=data.id;const {id:discard,...payload}=data;const r=await request(id?'/api/assessments/'+encodeURIComponent(id):'/api/assessments',{method:id?'PATCH':'POST',body:JSON.stringify(payload)},s.access_token);return [r];}
+async function deleteDraft(id){const s=restore();if(!s)throw new Error('Önce giriş yapın.');if(!/^[0-9a-f-]{36}$/i.test(String(id)))throw new Error('Taslak kimliği geçersiz.');return await request('/api/assessments/'+encodeURIComponent(id),{method:'DELETE'},s.access_token);}
 async function generate(data){const s=restore();if(!s)throw new Error('Önce giriş yapın.');return await request('/api/ai/generate',{method:'POST',body:JSON.stringify(data)},s.access_token);}
-window.HACER_API=Object.freeze({configured,login,logout,restore,teacher,published,getAssessment,mine,upsert,generate});
+window.HACER_API=Object.freeze({configured,login,logout,restore,teacher,published,getAssessment,mine,upsert,deleteDraft,generate});
 })();
