@@ -100,6 +100,9 @@
   .library-card .library-note{font-size:11px;color:#73698c;margin:9px 0 10px;line-height:1.5}
   .library-card .library-actions{display:flex;gap:6px;flex-wrap:wrap}
   .library-card .library-actions button{font-size:11px;padding:8px 10px;border-radius:9px;white-space:normal}
+  .library-card .library-actions .delete-draft{background:#fff2f2;color:#a42f38;border:1px solid #f3b8be}
+  .library-card .library-actions .delete-draft:hover:not(:disabled){background:#ffe7e7}
+  .library-card .library-actions button:disabled{opacity:.55;cursor:wait}
   .library-pages{display:flex;justify-content:space-between;align-items:center;gap:7px;margin:12px 0 0}
   .library-pages button{font-size:11px;padding:7px 9px;background:#f1edfc;color:#5744a6;border-radius:9px}
   .library-pages button:disabled{opacity:.35}
@@ -135,6 +138,18 @@
   window.scrollTo({top:0,behavior:'smooth'});
   status('Kayıt açıldı. Değişiklikleri kaydederek güncelleyebilirsin.');
  }
+ async function removeDraft(a,button){
+  if(a.legacy||a.status!=='draft'||!a.id)return;
+  const confirmed=window.confirm(`“${a.title}” taslağını kalıcı olarak silmek istiyor musun?\n\nBu işlem geri alınamaz. Yayındaki sınavlar silinmez.`);
+  if(!confirmed)return;
+  button.disabled=true;
+  try{
+   await api.deleteDraft(a.id);
+   if(currentId===a.id){currentId=null;questions=[];renderEditor();}
+   await refreshList();
+   status(`“${a.title}” taslağı silindi.`);
+  }catch(e){button.disabled=false;status('Taslak silinemedi: '+e.message,true);}
+ }
  function renderLibrary(){
   const list=$('my-list');list.replaceChildren();
   const matching=assessments.filter(a=>(!filters.grade||String(a.grade)===filters.grade)&&
@@ -159,10 +174,10 @@
    const body=document.createElement('div');body.className='library-body';
    const note=document.createElement('p');note.className='library-note';note.textContent=a.legacy?'Bu çalışmanın özgün görselleri ve kişiye özel soru sistemi korunur. Düzenleme henüz bu panelde desteklenmiyor.':a.status==='draft'?'Bu sınav henüz öğrencilere açık değil. Düzenleyip yayınlayabilirsin.':`${a.questions?.length||0} soruluk değerlendirme öğrencilere açık.`;
    const actions=document.createElement('div');actions.className='library-actions';
-   function button(text,cls,handler){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.addEventListener('click',handler);actions.append(b);}
+   function button(text,cls,handler){const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.addEventListener('click',()=>handler(b));actions.append(b);return b;}
    const link=a.legacy?new URL('../'+a.path.substring(2),location.href).href:new URL('../sinav/index.html?id='+encodeURIComponent(a.id),location.href).href;
    if(a.legacy){button('Etkinliği aç','secondary',()=>window.open(link,'_blank','noopener,noreferrer'));button('Bağlantıyı kopyala','ghost',()=>copyOrShow(link));}
-   else{button('Düzenle','secondary',()=>editAssessment(a));if(a.status==='published'){button('Sınavı aç','ghost',()=>window.open(link,'_blank','noopener,noreferrer'));button('Bağlantıyı kopyala','ghost',()=>copyOrShow(link));}}
+   else{button('Düzenle','secondary',()=>editAssessment(a));if(a.status==='published'){button('Sınavı aç','ghost',()=>window.open(link,'_blank','noopener,noreferrer'));button('Bağlantıyı kopyala','ghost',()=>copyOrShow(link));}else if(a.status==='draft'){button('Taslağı sil','delete-draft',btn=>removeDraft(a,btn));}}
    body.append(note,actions);details.append(body);
    details.addEventListener('toggle',()=>{if(details.open)for(const other of results.querySelectorAll('details[open]'))if(other!==details)other.open=false;});
    results.append(details);
