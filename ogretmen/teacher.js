@@ -14,9 +14,50 @@
  host.querySelectorAll('[data-q]').forEach(input=>input.addEventListener('change',e=>{const el=e.currentTarget;const i=Number(el.dataset.q),v=questions[i].variants[0];if(el.dataset.option!==undefined)v.options[Number(el.dataset.option)]=el.value;else if(el.dataset.key==='correct')v.correct=Number(el.value);else v[el.dataset.key]=el.value;}));
  }
  function demo(){let count=Number($('count').value),subject=$('subject').value;const t=$('topic').value||'Konu';questions=Array.from({length:count},(_,i)=>{const n=i+2, m=(i%6)+3,ans=n*m;const q=(subject==='math')?{prompt:`Bir kutuda ${n} sıra var. Her sırada ${m} kalem bulunuyor. Kutuda toplam kaç kalem vardır?`,options:[`${ans+n}`,`${ans}`,`${ans+m}`],correct:1,hint:'Her sıradaki kalemleri sıra sayısı kadar ekleyebilirsin.',explanation:`${n} × ${m} = ${ans} kalem.`,emoji:'✏️'}:{prompt:`“${i%2?'Hızlı':'Mutlu'}” sözcüğünün ${i%2?'zıt':'eş'} anlamlısı hangisidir?`,options:i%2?['Çabuk','Yavaş','Süratli']:['Üzgün','Neşeli','Kızgın'],correct:1,hint:i%2?'Karşıt bir anlam düşün.':'Benzer anlamlı sözcüğü ara.',explanation:i%2?'Hızlı ile yavaş zıt anlamlıdır.':'Mutlu ile neşeli eş anlamlıdır.',emoji:'📖'};return {skill:subject==='math'?'Çokluklar ve işlemler':'Sözcük anlamı',difficulty:1+Math.floor(i/count*3),variants:[q]};});currentId=null;renderEditor();status(`“${t}” için yalnızca ÖRNEK soru seti hazırlandı. Yayınlamadan önce her soruyu kontrol edin.`);}
- async function refreshList(){if(!teacherUser)return;const list=$('my-list');list.textContent='Yükleniyor…';try{const rows=await api.mine();list.replaceChildren();if(!rows.length){list.textContent='Henüz kayıtlı değerlendirme yok.';return;}rows.forEach(a=>{const article=document.createElement('div');article.className='item';article.innerHTML=`<div class="title">${esc(a.emoji||'📘')} ${esc(a.title)}</div><div class="sub">${a.grade}. sınıf · ${esc(a.subject)} · ${a.status==='published'?'🟢 Yayında':'📝 Taslak'} · ${a.questions?.length||0} soru</div><div class="buttons"><button class="secondary edit">Düzenle</button><button class="ghost link">Bağlantıyı kopyala</button></div>`;
- article.querySelector('.edit').onclick=()=>{currentId=a.id;questions=JSON.parse(JSON.stringify(a.questions));$('grade').value=a.grade;$('subject').value=a.subject;$('topic').value=a.title;$('description').value=a.description||'';$('emoji').value=a.emoji||'📘';$('count').value=String(questions.length);renderEditor();window.scrollTo({top:0,behavior:'smooth'});status('Kayıt açıldı. Değişiklikleri kaydederek güncelleyebilirsin.');};
- article.querySelector('.link').onclick=async()=>{const link=new URL('../sinav/index.html?id='+encodeURIComponent(a.id),location.href).href;try{await navigator.clipboard.writeText(link);status('Sınav bağlantısı kopyalandı.')}catch{status(link)}};list.append(article);});}catch(e){list.textContent='Liste alınamadı: '+e.message;}}
+ // Daha once GitHub Pages uzerinde yayinlanan etkinlikler de ogretmen listesinde gorunur.
+ // Eski oyunlarin ozel yapisini, kisisellestirmesini veya ogrenci karnesini degistirmez.
+ async function publishedLegacyActivities(){
+  try{
+   const response=await fetch('../data/konular.json',{cache:'no-store'});
+   if(!response.ok)throw new Error('Katalog okunamadi');
+   const catalog=await response.json();
+   const activities=Array.isArray(catalog.activities)?catalog.activities:[];
+   return activities.filter(a=>a&&a.status==='ready'&&Number.isInteger(a.grade)&&a.grade>=1&&a.grade<=4&&
+    typeof a.title==='string'&&typeof a.path==='string'&&/^\.\/etkinlikler\/[a-z0-9/_-]+\/index\.html$/.test(a.path));
+  }catch(e){console.warn('Eski etkinlik kataloğu okunamadı:',e);return [];}
+ }
+ async function copyOrShow(link){
+  try{await navigator.clipboard.writeText(link);status('Öğrenci bağlantısı kopyalandı.');}
+  catch{status('Etkinlik bağlantısı: '+link);}
+ }
+ async function refreshList(){
+  if(!teacherUser)return;
+  const list=$('my-list');list.textContent='Yükleniyor…';
+  try{
+   const [rows,legacy]=await Promise.all([api.mine(),publishedLegacyActivities()]);
+   list.replaceChildren();
+   if(!rows.length&&!legacy.length){list.textContent='Henüz kayıtlı değerlendirme yok.';return;}
+   legacy.forEach(a=>{
+    // Legacy yolunu katalogdan al; son karar sadece statik yerel etkinlik dizinine aittir.
+    const link=new URL('../'+a.path.substring(2),location.href).href;
+    const article=document.createElement('div');article.className='item';
+    article.innerHTML=`<div class="title">${esc(a.icon||'📘')} ${esc(a.title)}</div>`+
+     `<div class="sub">${a.grade}. sınıf · ${esc(a.subject)} · 🟢 Yayında · Eski interaktif etkinlik</div>`+
+     `<p class="hint" style="margin:7px 0 10px">Kişiye özel oyunun özgün sürümü korunur. Bu etkinlik henüz panelden düzenlenemez.</p>`+
+     `<div class="buttons"><button class="secondary open-legacy" type="button">Etkinliği aç</button><button class="ghost copy-legacy" type="button">Bağlantıyı kopyala</button></div>`;
+    article.querySelector('.open-legacy').onclick=()=>window.open(link,'_blank','noopener,noreferrer');
+    article.querySelector('.copy-legacy').onclick=()=>copyOrShow(link);
+    list.append(article);
+   });
+   rows.forEach(a=>{
+    const article=document.createElement('div');article.className='item';
+    article.innerHTML=`<div class="title">${esc(a.emoji||'📘')} ${esc(a.title)}</div><div class="sub">${a.grade}. sınıf · ${esc(a.subject)} · ${a.status==='published'?'🟢 Yayında':'📝 Taslak'} · ${a.questions?.length||0} soru</div><div class="buttons"><button class="secondary edit">Düzenle</button><button class="ghost link">Bağlantıyı kopyala</button></div>`;
+    article.querySelector('.edit').onclick=()=>{currentId=a.id;questions=JSON.parse(JSON.stringify(a.questions));$('grade').value=a.grade;$('subject').value=a.subject;$('topic').value=a.title;$('description').value=a.description||'';$('emoji').value=a.emoji||'📘';$('count').value=String(questions.length);renderEditor();window.scrollTo({top:0,behavior:'smooth'});status('Kayıt açıldı. Değişiklikleri kaydederek güncelleyebilirsin.');};
+    article.querySelector('.link').onclick=()=>copyOrShow(new URL('../sinav/index.html?id='+encodeURIComponent(a.id),location.href).href);
+    list.append(article);
+   });
+  }catch(e){list.textContent='Liste alınamadı: '+e.message;}
+ }
  async function session(){if(!api.configured()){ $('config-warning').classList.remove('hidden');$('login').disabled=true;return;}
  try{teacherUser=await api.teacher();}catch(e){$('login-status').textContent='Oturum doğrulanamadı.';api.logout();}
  $('login-view').classList.toggle('hidden',!!teacherUser);$('login-ok').classList.toggle('hidden',!teacherUser);$('logout').classList.toggle('hidden',!teacherUser);
