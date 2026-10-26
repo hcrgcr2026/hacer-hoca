@@ -122,9 +122,10 @@
         <div class="about-card"><div class="emoji" aria-hidden="true">🌟</div><h3>3. Başarını keşfet</h3><p>Değerlendirme karnende güçlü yanlarını ve çalışabileceğin konuları gör.</p></div>
       </div>
     </section>
-    <details class="teacher-help" id="ogretmen-rehberi"><summary>👩‍🏫 Öğretmen köşesi · Yeni konu nasıl eklenir?</summary><div class="teacher-body"><p>Yeni konular artık ana sayfanın kodu değiştirilmeden eklenir. <a href="./araclar/konu-ekle.html" style="color:#5945c8;font-weight:800;text-decoration:underline">Konu Ekleme Aracı'nı aç</a>, sınıfı, dersi, konu başlığını seç ve hazırladığın tek dosyalık HTML sınavını yükle. Araç gerekli dosyaları ZIP olarak üretir.</p><p>ZIP'i açıp içindeki <code>data/konular.json</code> ve yeni <code>etkinlikler/.../index.html</code> dosyasını GitHub deposunda aynı klasör yollarına yükle. Mevcut portal <code>index.html</code> dosyasına dokunma.</p><p>Bu portal yalnızca statik dosyalar kullanır. Öğrenci sonuçları öğretmene otomatik gönderilmez.</p></div></details>
+    <details class="teacher-help" id="ogretmen-rehberi"><summary>👩‍🏫 Öğretmen köşesi · Yeni konu nasıl eklenir?</summary><div class="teacher-body"><p>Yeni konular artık ana sayfanın kodu değiştirilmeden eklenir. <a href="./ogretmen/index.html" style="color:#5945c8;font-weight:800;text-decoration:underline">Öğretmen Panelini aç</a>, sınıfı ve dersi seç, değerlendirmeyi oluştur ve önizledikten sonra “Yayınla”ya bas. Supabase bağlandıktan sonra ZIP veya GitHub işlemi gerekmez.</p><p>Mevcut statik Kesirler sınavı korunur. Öğrenci sonuçları otomatik kaydedilmez.</p></div></details>
   </main>
-  <footer><div class="wrap footer-row"><span><strong>✦ Hacer Hoca</strong> · Öğrenme Atölyesi</span><span>Reklamsız • Ücretsiz • Öğrenciler için hazırlanmıştır</span></div></footer>
+  <footer><div class="wrap footer-row"><span><strong>✦ Hacer Hoca</strong> · Öğrenme Atölyesi · <a href="./ogretmen/index.html" style="text-decoration:underline">Öğretmen girişi</a></span><span>Reklamsız • Ücretsiz • Öğrenciler için hazırlanmıştır</span></div></footer>
+  <script src="./config.js"></script><script src="./assets/api.js"></script>
   <script>
     'use strict';
     // New topics can be added here. Keep status="upcoming" until the referenced file exists.
@@ -189,7 +190,7 @@
         if(!candidate.length)throw new Error('Boş katalog');
         ACTIVITIES=candidate.map(a=>({
           ...a,
-          status:a.status==='ready'&&typeof a.path==='string'&&/^\.\/etkinlikler\/[a-z0-9/_-]+\/index\.html$/.test(a.path)?'ready':'upcoming',
+          status:a.status==='ready'&&typeof a.path==='string'&&(/^\.\/etkinlikler\/[a-z0-9/_-]+\/index\.html$/.test(a.path)||/^\.\/sinav\/index\.html\?id=[a-f0-9-]{36}$/.test(a.path))?'ready':'upcoming',
           tint:/^#[0-9a-fA-F]{6}$/.test(a.tint||'')?a.tint:'#f4eeff'
         }));
         alert.hidden=true;
@@ -204,7 +205,21 @@
         renderTopics();
       }
     }
-    renderSubjects();renderTopics();loadCatalog();
+    async function loadLiveAssessments(){
+      const api=window.HACER_API;
+      if(!api||!api.configured())return;
+      try{
+        const entries=await api.published();
+        const dynamic=entries.filter(a=>/^[0-9a-f-]{36}$/.test(a.id)&&a.grade>=1&&a.grade<=4&&SUBJECTS[a.subject]).map(a=>({
+          grade:a.grade,subject:a.subject,title:a.title,description:a.description||'',icon:a.emoji||'📘',tint:'#e9f5ff',status:'ready',
+          path:'./sinav/index.html?id='+a.id,detail:'Kişiye özel yeni nesil değerlendirme'
+        }));
+        const identities=new Set(dynamic.map(a=>`${a.grade}:${a.subject}:${a.title.toLocaleLowerCase('tr')}`));
+        ACTIVITIES=[...ACTIVITIES.filter(a=>!identities.has(`${a.grade}:${a.subject}:${a.title.toLocaleLowerCase('tr')}`)),...dynamic];
+        renderTopics();
+      }catch(e){console.warn('Canlı konu listesi alınamadı, statik katalog korunuyor.');}
+    }
+    renderSubjects();renderTopics();loadCatalog().finally(loadLiveAssessments);
   </script>
 </body>
 </html>

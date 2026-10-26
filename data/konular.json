@@ -200,6 +200,17 @@
       "icon": "🧭",
       "tint": "#fff1df",
       "status": "upcoming"
+    },
+    {
+      "grade": 3,
+      "subject": "turkish",
+      "title": "Eş ve Zıt Anlamlı Kelimeler",
+      "description": "Öğrencilerin seviyesine uygun kelimeler",
+      "icon": "📚",
+      "detail": "10 soruluk değerlendirme",
+      "tint": "#efeafd",
+      "status": "ready",
+      "path": "./etkinlikler/3-sinif/turkce/es-ve-zit-anlamli-kelimeler/index.html"
     }
   ]
 }
