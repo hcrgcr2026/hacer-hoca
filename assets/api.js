@@ -15,9 +15,19 @@ async function login(email,password){const r=await request('/api/auth/login',{me
 function logout(){remember(null);}
 async function teacher(){const s=restore();return s?await request('/api/auth/me',{},s.access_token):null;}
 async function published(){return await request('/api/assessments');}
-async function getAssessment(id){const s=restore();return await request('/api/assessments/'+encodeURIComponent(id),{},s?.access_token);}
-async function mine(){const s=restore();if(!s)throw new Error('Önce giriş yapın.');return await request('/api/mine',{},s.access_token);}
-async function upsert(data){const s=restore();if(!s)throw new Error('Oturum sona erdi.');const id=data.id;const {id:discard,...payload}=data;const r=await request(id?'/api/assessments/'+encodeURIComponent(id):'/api/assessments',{method:id?'PATCH':'POST',body:JSON.stringify(payload)},s.access_token);return [r];}
+// Backward compatibility: older Bun SQL code accidentally stored JSON arrays as JSON strings.
+// Unwrap only an assessment's questions; never alter or execute its content.
+function normalizeAssessment(row){
+ if(!row||typeof row!=='object')return row;
+ let questions=row.questions;
+ for(let i=0;i<3&&typeof questions==='string';i++){
+  try{questions=JSON.parse(questions);}catch{break;}
+ }
+ return Array.isArray(questions)?{...row,questions}:row;
+}
+async function getAssessment(id){const s=restore();return normalizeAssessment(await request('/api/assessments/'+encodeURIComponent(id),{},s?.access_token));}
+async function mine(){const s=restore();if(!s)throw new Error('Önce giriş yapın.');const rows=await request('/api/mine',{},s.access_token);return Array.isArray(rows)?rows.map(normalizeAssessment):rows;}
+async function upsert(data){const s=restore();if(!s)throw new Error('Oturum sona erdi.');const id=data.id;const {id:discard,...payload}=data;const r=await request(id?'/api/assessments/'+encodeURIComponent(id):'/api/assessments',{method:id?'PATCH':'POST',body:JSON.stringify(payload)},s.access_token);return [normalizeAssessment(r)];}
 async function deleteDraft(id){const s=restore();if(!s)throw new Error('Önce giriş yapın.');if(!/^[0-9a-f-]{36}$/i.test(String(id)))throw new Error('Taslak kimliği geçersiz.');return await request('/api/assessments/'+encodeURIComponent(id),{method:'DELETE'},s.access_token);}
 async function generate(data){const s=restore();if(!s)throw new Error('Önce giriş yapın.');return await request('/api/ai/generate',{method:'POST',body:JSON.stringify(data)},s.access_token);}
 window.HACER_API=Object.freeze({configured,login,logout,restore,teacher,published,getAssessment,mine,upsert,deleteDraft,generate});

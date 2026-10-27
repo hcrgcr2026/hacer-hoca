@@ -22,7 +22,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "2 eş parçadan 1 tanesi seçilmiştir; kesir 1/2.",
           "emoji": "🧩",
-          "level": 1
+          "level": 1,
+          "title": "Pizza paylaşımı",
+          "visual": {
+            "kind": "pizza",
+            "parts": 2,
+            "shaded": 1,
+            "caption": "Bütün 2 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 2 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 2: sonuç 1/2."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "3 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -55,7 +73,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "2 eş parçadan 1 tanesi seçilmiştir; kesir 1/2.",
           "emoji": "🧩",
-          "level": 1
+          "level": 1,
+          "title": "Kesir çubuğu",
+          "visual": {
+            "kind": "bar",
+            "parts": 2,
+            "shaded": 1,
+            "caption": "Bütün 2 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 2 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 2: sonuç 1/2."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "3 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -88,7 +124,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "2 eş parçadan 1 tanesi seçilmiştir; kesir 1/2.",
           "emoji": "🧩",
-          "level": 1
+          "level": 1,
+          "title": "Mozaik desen",
+          "visual": {
+            "kind": "grid",
+            "parts": 2,
+            "shaded": 1,
+            "caption": "Bütün 2 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 2 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 2: sonuç 1/2."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "3 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -154,7 +208,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "3 eş parçadan 1 tanesi seçilmiştir; kesir 1/3.",
           "emoji": "🧩",
-          "level": 2
+          "level": 2,
+          "title": "Paylaşımın sırrı",
+          "visual": {
+            "kind": "bar",
+            "parts": 3,
+            "shaded": 1,
+            "caption": "Bütün 3 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 3 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 3: sonuç 1/3."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "4 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -187,7 +259,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "3 eş parçadan 2 tanesi seçilmiştir; kesir 2/3.",
           "emoji": "🧩",
-          "level": 2
+          "level": 2,
+          "title": "Boyalı model",
+          "visual": {
+            "kind": "objects",
+            "parts": 3,
+            "shaded": 2,
+            "caption": "Bütün 3 eş parçaya ayrılmış, 2 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 3 eş parçadan oluştuğunu belirle.",
+            "2 boyalı parçayı say.",
+            "Pay 2, payda 3: sonuç 2/3."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "4 eş parça var. 2 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -253,7 +343,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "3 eş parçadan 2 tanesi seçilmiştir; kesir 2/3.",
           "emoji": "🧩",
-          "level": 2
+          "level": 2,
+          "title": "Kesir çubuğu",
+          "visual": {
+            "kind": "bar",
+            "parts": 3,
+            "shaded": 2,
+            "caption": "Bütün 3 eş parçaya ayrılmış, 2 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 3 eş parçadan oluştuğunu belirle.",
+            "2 boyalı parçayı say.",
+            "Pay 2, payda 3: sonuç 2/3."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "4 eş parça var. 2 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -319,7 +427,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "4 eş parçadan 1 tanesi seçilmiştir; kesir 1/4.",
           "emoji": "🧩",
-          "level": 3
+          "level": 3,
+          "title": "Robotun pili",
+          "visual": {
+            "kind": "battery",
+            "parts": 4,
+            "shaded": 1,
+            "caption": "Bütün 4 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 4 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 4: sonuç 1/4."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "5 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -352,7 +478,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "4 eş parçadan 2 tanesi seçilmiştir; kesir 2/4.",
           "emoji": "🧩",
-          "level": 3
+          "level": 3,
+          "title": "Paylaşımın sırrı",
+          "visual": {
+            "kind": "bar",
+            "parts": 4,
+            "shaded": 2,
+            "caption": "Bütün 4 eş parçaya ayrılmış, 2 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 4 eş parçadan oluştuğunu belirle.",
+            "2 boyalı parçayı say.",
+            "Pay 2, payda 4: sonuç 2/4."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "5 eş parça var. 2 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -418,7 +562,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "5 eş parçadan 1 tanesi seçilmiştir; kesir 1/5.",
           "emoji": "🧩",
-          "level": 4
+          "level": 4,
+          "title": "Pizza paylaşımı",
+          "visual": {
+            "kind": "pizza",
+            "parts": 5,
+            "shaded": 1,
+            "caption": "Bütün 5 eş parçaya ayrılmış, 1 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 5 eş parçadan oluştuğunu belirle.",
+            "1 boyalı parçayı say.",
+            "Pay 1, payda 5: sonuç 1/5."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "6 eş parça var. 1 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -451,7 +613,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "5 eş parçadan 2 tanesi seçilmiştir; kesir 2/5.",
           "emoji": "🧩",
-          "level": 4
+          "level": 4,
+          "title": "Kesir çubuğu",
+          "visual": {
+            "kind": "bar",
+            "parts": 5,
+            "shaded": 2,
+            "caption": "Bütün 5 eş parçaya ayrılmış, 2 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 5 eş parçadan oluştuğunu belirle.",
+            "2 boyalı parçayı say.",
+            "Pay 2, payda 5: sonuç 2/5."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "6 eş parça var. 2 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -517,7 +697,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "5 eş parçadan 4 tanesi seçilmiştir; kesir 4/5.",
           "emoji": "🧩",
-          "level": 4
+          "level": 4,
+          "title": "Robotun pili",
+          "visual": {
+            "kind": "battery",
+            "parts": 5,
+            "shaded": 4,
+            "caption": "Bütün 5 eş parçaya ayrılmış, 4 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 5 eş parçadan oluştuğunu belirle.",
+            "4 boyalı parçayı say.",
+            "Pay 4, payda 5: sonuç 4/5."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "6 eş parça var. 4 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -550,7 +748,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "6 eş parçadan 2 tanesi seçilmiştir; kesir 2/6.",
           "emoji": "🧩",
-          "level": 5
+          "level": 5,
+          "title": "Paylaşımın sırrı",
+          "visual": {
+            "kind": "bar",
+            "parts": 6,
+            "shaded": 2,
+            "caption": "Bütün 6 eş parçaya ayrılmış, 2 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 6 eş parçadan oluştuğunu belirle.",
+            "2 boyalı parçayı say.",
+            "Pay 2, payda 6: sonuç 2/6."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "7 eş parça var. 2 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -583,7 +799,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "6 eş parçadan 3 tanesi seçilmiştir; kesir 3/6.",
           "emoji": "🧩",
-          "level": 5
+          "level": 5,
+          "title": "Boyalı model",
+          "visual": {
+            "kind": "objects",
+            "parts": 6,
+            "shaded": 3,
+            "caption": "Bütün 6 eş parçaya ayrılmış, 3 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 6 eş parçadan oluştuğunu belirle.",
+            "3 boyalı parçayı say.",
+            "Pay 3, payda 6: sonuç 3/6."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "7 eş parça var. 3 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -616,7 +850,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "6 eş parçadan 4 tanesi seçilmiştir; kesir 4/6.",
           "emoji": "🧩",
-          "level": 5
+          "level": 5,
+          "title": "Pizza paylaşımı",
+          "visual": {
+            "kind": "pizza",
+            "parts": 6,
+            "shaded": 4,
+            "caption": "Bütün 6 eş parçaya ayrılmış, 4 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 6 eş parçadan oluştuğunu belirle.",
+            "4 boyalı parçayı say.",
+            "Pay 4, payda 6: sonuç 4/6."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "7 eş parça var. 4 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",
@@ -649,7 +901,25 @@
           "hint": "Boyalı parça sayısını paya, toplam eş parça sayısını paydaya yaz.",
           "explanation": "6 eş parçadan 5 tanesi seçilmiştir; kesir 5/6.",
           "emoji": "🧩",
-          "level": 5
+          "level": 5,
+          "title": "Kesir çubuğu",
+          "visual": {
+            "kind": "bar",
+            "parts": 6,
+            "shaded": 5,
+            "caption": "Bütün 6 eş parçaya ayrılmış, 5 parçası boyalı."
+          },
+          "steps": [
+            "Bütünün 6 eş parçadan oluştuğunu belirle.",
+            "5 boyalı parçayı say.",
+            "Pay 5, payda 6: sonuç 5/6."
+          ],
+          "takeaway": "Bir kesrin payı seçilen, paydası toplam eş parça sayısını gösterir.",
+          "diagnose": [
+            "",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say.",
+            "Pay ve paydayı karıştırmış olabilirsin; görseldeki parçaları yeniden say."
+          ]
         },
         {
           "prompt": "7 eş parça var. 5 parça işaretli. İşaretlenen parçaları hangi kesir gösterir?",

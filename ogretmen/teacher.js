@@ -5,7 +5,6 @@
  function status(text,error=false){$('work-status').textContent=text;$('work-status').className='status '+(error?'error':'good');}
  function tdata(){return {grade:Number($('grade').value),subject:$('subject').value,title:$('topic').value.trim(),description:$('description').value.trim(),emoji:$('emoji').value,status:'draft',questions};}
  function malformedText(value){return typeof value==='string'&&/\b(?:undefined|nan|null)\b|\[object\s+object\]|(?:undefined)(?:dir|den|dan|ten|tan|tir|dır)/i.test(value);}
- function malformedText(value){return typeof value==='string'&&/\b(?:undefined|nan|null)\b|\[object\s+object\]|(?:undefined)(?:dir|den|dan|ten|tan|tir|dır)/i.test(value);}
  function validQuestions(qs){
   if(!Array.isArray(qs)||![10,15,20].includes(qs.length))return '10, 15 veya 20 soru olmalı.';
   for(let i=0;i<qs.length;i++){
@@ -21,6 +20,16 @@
      return `${where}: "undefined" benzeri hatalı bir ifade var. Soruyu açıp düzeltmeden yayınlama.`;
     const distinct=new Set(v.options.map(x=>x.trim().toLocaleLowerCase('tr-TR')));
     if(distinct.size!==3)return `${where}: Üç seçeneğin birbirinden farklı olması gerekiyor.`;
+    if(v.visual&&v.visual.kind&&v.visual.kind!=='none'){
+     const g=v.visual,allowed=['pizza','bar','battery','grid','line','objects'];
+     if(!allowed.includes(g.kind)||!Number.isInteger(Number(g.parts))||!Number.isInteger(Number(g.shaded))||Number(g.parts)<2||Number(g.parts)>24||Number(g.shaded)<0||Number(g.shaded)>Number(g.parts)||(['pizza','line'].includes(g.kind)&&Number(g.parts)>12)||typeof g.caption!=='string'||g.caption.length>150)
+      return `${where}: Görsel modeli hatalı. Tür, toplam parça, işaretli parça ve açıklamayı kontrol et.`;
+     if(malformedText(g.caption))return `${where}: Görsel açıklamasında hatalı metin var.`;
+    }
+    if(v.steps!==undefined&&(!Array.isArray(v.steps)||v.steps.length>4||v.steps.some(x=>typeof x!=='string'||!x.trim()||malformedText(x))))return `${where}: Çözüm adımları geçersiz.`;
+    if(v.takeaway!==undefined&&(typeof v.takeaway!=='string'||malformedText(v.takeaway)))return `${where}: Öğrenme notu geçersiz.`;
+    if(v.diagnose!==undefined&&(!Array.isArray(v.diagnose)||v.diagnose.length!==3||v.diagnose.some(x=>typeof x!=='string'||malformedText(x))))return `${where}: Seçeneklere ait düşünme uyarıları geçersiz.`;
+
    }
   }
   return '';
@@ -37,6 +46,17 @@
        <div class="field"><label>Doğru seçenek</label><select data-q="${i}" data-variant="${j}" data-key="correct">${[0,1,2].map(n=>`<option value="${n}" ${n===v.correct?'selected':''}>${'ABC'[n]}</option>`).join('')}</select></div>
      </div><div class="quest-grid"><div class="field"><label>İpucu</label><textarea data-q="${i}" data-variant="${j}" data-key="hint">${esc(v.hint||'')}</textarea></div>
      <div class="field"><label>Çözüm açıklaması</label><textarea data-q="${i}" data-variant="${j}" data-key="explanation">${esc(v.explanation||'')}</textarea></div></div>
+     <details style="margin-top:11px;padding:10px;border:1px dashed #d8cfee;border-radius:12px"><summary style="cursor:pointer;font-weight:850;padding:5px">🖼️ Yeni nesil görsel ve ayrıntılı çözüm</summary>
+      <div class="field"><label>Soru başlığı</label><input data-q="${i}" data-variant="${j}" data-key="title" maxlength="90" value="${esc(v.title||'')}"></div>
+      <div class="fields"><div class="field"><label>Görsel türü</label><select data-q="${i}" data-variant="${j}" data-visual="kind">${[['none','Görsel yok (emoji)'],['pizza','Pizza modeli'],['bar','Kesir çubuğu'],['battery','Pil / doluluk'],['grid','Kareli model'],['line','Sayı doğrusu'],['objects','Nesne grubu']].map(([k,label])=>`<option value="${k}" ${(v.visual?.kind||'none')===k?'selected':''}>${label}</option>`).join('')}</select></div>
+      <div class="field"><label>Toplam eş parça (2–24)</label><input type="number" min="2" max="24" data-q="${i}" data-variant="${j}" data-visual="parts" value="${Number(v.visual?.parts)||4}"></div>
+      <div class="field"><label>Boyalı / işaretli parça</label><input type="number" min="0" max="24" data-q="${i}" data-variant="${j}" data-visual="shaded" value="${Number.isFinite(Number(v.visual?.shaded))&&v.visual?.shaded!==undefined?Number(v.visual.shaded):1}"></div></div>
+      <div class="field"><label>Görselin açıklaması (soruyla uyumlu olmalı)</label><input maxlength="150" data-q="${i}" data-variant="${j}" data-visual="caption" value="${esc(v.visual?.caption||'')}"></div>
+      <p class="hint">Uyarı: Görselin boyalı parça sayısı, soru kökü ve doğru seçenek birbiriyle tutarlı olmalı. Otomatik kontrol matematiksel doğruluğu garanti etmez.</p>
+      <div class="field"><label>Çözüm adımları (her satır bir adım, en fazla 4)</label><textarea data-q="${i}" data-variant="${j}" data-key="steps">${esc(Array.isArray(v.steps)?v.steps.join('\n'):'')}</textarea></div>
+      <div class="field"><label>Öğrenme notu</label><input maxlength="400" data-q="${i}" data-variant="${j}" data-key="takeaway" value="${esc(v.takeaway||'')}"></div>
+      <div class="field"><label>Yanlış seçenek geri bildirimleri (A, B, C sırasıyla, her satır bir seçenek)</label><textarea data-q="${i}" data-variant="${j}" data-key="diagnose">${esc(Array.isArray(v.diagnose)?v.diagnose.join('\n'):'')}</textarea></div>
+     </details>
     </details>`).join('');
    div.innerHTML=`<summary class="qhead"><strong>🧩 ${i+1}. Aşama · ${esc(q.skill||'Düşünme')}</strong><span class="pill">${Number(q.difficulty)||1}/5</span></summary>
     <div class="question-body"><p class="hint">Her iki varyantı da kontrol et. Farklı öğrenciler aynı aşamanın farklı sorusunu görebilir.</p>${variants}</div>`;
@@ -46,7 +66,15 @@
    const el=e.currentTarget,i=Number(el.dataset.q),j=Number(el.dataset.variant),v=questions[i]?.variants[j];
    if(!v)return;
    if(el.dataset.option!==undefined)v.options[Number(el.dataset.option)]=el.value;
+   else if(el.dataset.visual){
+    const k=el.dataset.visual;
+    if(k==='kind'&&el.value==='none'){delete v.visual;return;}
+    if(!v.visual)v.visual={kind:'bar',parts:4,shaded:1,caption:''};
+    v.visual[k]=(k==='parts'||k==='shaded')?Number(el.value):el.value;
+   }
    else if(el.dataset.key==='correct')v.correct=Number(el.value);
+   else if(el.dataset.key==='steps')v.steps=el.value.split('\n').map(x=>x.trim()).filter(Boolean);
+   else if(el.dataset.key==='diagnose'){const items=el.value.split('\n').map(x=>x.trim());v.diagnose=[0,1,2].map(i=>items[i]||'');}
    else v[el.dataset.key]=el.value;
   }));
  }
@@ -210,7 +238,7 @@
  $('logout').onclick=()=>{api.logout();teacherUser=null;$('my-list').textContent='Giriş yaptıktan sonra burada görünecek.';document.getElementById('assessment-controls')?.classList.add('hidden');session();};
  $('demo').onclick=demo;
  $('generate').onclick=async()=>{if(!api.configured()||!teacherUser){status('Yapay zekâ üretimi için önce Railway API ve öğretmen girişini etkinleştirmeliyiz. Şimdilik “Örnek soru seti” ile arayüzü deneyebilirsin.',true);return;}
- const btn=$('generate');btn.disabled=true;status('Sorular oluşturuluyor…');try{const result=await api.generate({grade:Number($('grade').value),subject:$('subject').value,title:$('topic').value.trim(),count:Number($('count').value)});const output=result.questions||[];const err=validQuestions(output);if(err)throw new Error(err);questions=output;currentId=null;renderEditor();status('Sorular oluşturuldu. Önizlemeden önce doğru cevapları ve açıklamaları kontrol edin.');}catch(e){status('Oluşturulamadı: '+e.message,true);}finally{btn.disabled=false;}};
+ const btn=$('generate');btn.disabled=true;status('Sorular oluşturuluyor…');try{const result=await api.generate({grade:Number($('grade').value),subject:$('subject').value,title:$('topic').value.trim(),count:Number($('count').value)});const output=result.questions||[];const err=validQuestions(output);if(err)throw new Error(err);questions=output;currentId=null;renderEditor();status('Yeni nesil sorular oluşturuldu. Her iki varyantta görselleri, doğru seçenekleri ve çözüm adımlarını kontrol edin.');}catch(e){status('Oluşturulamadı: '+e.message,true);}finally{btn.disabled=false;}};
  $('preview').onclick=()=>{const err=validQuestions(questions);if(err){status(err,true);return;}const data=tdata();localStorage.setItem('hacer_preview_v3',JSON.stringify(data));window.open('../sinav/index.html?preview=1','_blank','noopener');};
  async function save(publish){if(!api.configured()||!teacherUser){status('Yayınlama için Railway API ve yetkili öğretmen girişi gerekli.',true);return;}
  const err=validQuestions(questions);if(err){status(err,true);return;}const data=tdata();if(!data.title||data.title.length<3){status('Konu başlığı en az üç karakter olmalı.',true);return;}
